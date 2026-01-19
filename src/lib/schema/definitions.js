@@ -197,12 +197,14 @@ export const AMENITIES = [
 
 // Status badge styling and labels
 export const STATUS_STYLES = {
-  published: {
-    color: "bg-green-100 text-green-700 border-green-200",
+  available: {
+    color:
+      "bg-green-500/10 text-green-600 border border-green-200 dark:text-green-400 dark:border-green-500/20",
     label: { en: "Published", ar: "منشور", fr: "Publié", es: "Publicado" },
   },
   pending: {
-    color: "bg-yellow-100 text-yellow-700 border-yellow-200",
+    color:
+      "bg-yellow-500/10 text-yellow-700 border border-yellow-200 dark:text-yellow-500 dark:border-yellow-500/20",
     label: {
       en: "Pending",
       ar: "قيد الانتظار",
@@ -211,15 +213,18 @@ export const STATUS_STYLES = {
     },
   },
   sold: {
-    color: "bg-red-100 text-red-700 border-red-200",
+    color:
+      "bg-red-500/10 text-red-600 border border-red-200 dark:text-red-400 dark:border-red-500/20",
     label: { en: "Sold", ar: "تم البيع", fr: "Vendu", es: "Vendido" },
   },
   rented: {
-    color: "bg-blue-100 text-blue-700 border-blue-200",
+    color:
+      "bg-blue-500/10 text-blue-600 border border-blue-200 dark:text-blue-400 dark:border-blue-500/20",
     label: { en: "Rented", ar: "مؤجر", fr: "Loué", es: "Alquilado" },
   },
   off_plan: {
-    color: "bg-purple-100 text-purple-700 border-purple-200",
+    color:
+      "bg-purple-100 text-purple-900 border border-purple-200 dark:bg-purple-900/30 dark:text-purple-400 dark:border-purple-800",
     label: {
       en: "Off-Plan / VEFA",
       ar: "بيع على التصميم",
