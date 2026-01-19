@@ -238,3 +238,47 @@ export const STATUS_STYLES = {
 export function getLabel(item, lang = "en") {
   return item?.label?.[lang] || item?.label?.["en"] || "Unknown";
 }
+
+export const LANGUAGE_CONFIG = {
+  en: {
+    id: "en",
+    label: "English",
+
+    bg: "bg-blue-500/5 dark:bg-blue-500/10",
+    border: "border-blue-500/20 dark:border-blue-500/30",
+    text: "text-blue-600 dark:text-blue-400",
+    badge:
+      "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800",
+    rtl: false,
+  },
+  fr: {
+    id: "fr",
+    label: "French",
+    bg: "bg-indigo-500/5 dark:bg-indigo-500/10",
+    border: "border-indigo-500/20 dark:border-indigo-500/30",
+    text: "text-indigo-600 dark:text-indigo-400",
+    badge:
+      "bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/40 dark:text-indigo-300 dark:border-indigo-800",
+    rtl: false,
+  },
+  es: {
+    id: "es",
+    label: "Spanish",
+    bg: "bg-yellow-500/5 dark:bg-yellow-500/10",
+    border: "border-yellow-500/20 dark:border-yellow-500/30",
+    text: "text-yellow-700 dark:text-yellow-400",
+    badge:
+      "bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-300 dark:border-yellow-800",
+    rtl: false,
+  },
+  ar: {
+    id: "ar",
+    label: "Arabic",
+    bg: "bg-green-500/5 dark:bg-green-500/10",
+    border: "border-green-500/20 dark:border-green-500/30",
+    text: "text-green-600 dark:text-green-400",
+    badge:
+      "bg-green-100 text-green-700 border-green-200 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800",
+    rtl: true,
+  },
+};

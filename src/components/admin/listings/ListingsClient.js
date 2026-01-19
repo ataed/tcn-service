@@ -101,43 +101,78 @@ export default function ListingsClient({ initialListings }) {
       }
     }
 
+    // --- 🟢 FIXED DELETE LOGIC ---
     if (type === "delete") {
       const { id } = data;
-      setIsDeleting(id); // Existing loading state
+      setIsDeleting(id); // Start loading spinner
 
       try {
-        const item = listings.find((l) => l.id === id);
+        // 1. FETCH FULL RECORD FIRST
+        // We do this to ensure we get gallery_urls and technical_plans
+        // even if the table view didn't load them.
+        const { data: itemToDelete, error: fetchError } = await supabase
+          .from("listings")
+          .select("main_image_url, gallery_urls, technical_plans")
+          .eq("id", id)
+          .single();
 
-        if (item) {
-          const imageFiles = [];
-          if (item.main_image_url) imageFiles.push(item.main_image_url);
-          if (item.gallery_urls?.length > 0)
-            imageFiles.push(...item.gallery_urls);
+        if (fetchError) {
+          console.error("Fetch error:", fetchError);
+          // Proceed anyway to at least delete the row
+        }
 
-          if (imageFiles.length > 0) {
-            await supabase.storage.from("property-images").remove(imageFiles);
+        // 2. PREPARE FILE LISTS
+        const imagesToRemove = [];
+        const docsToRemove = [];
+
+        if (itemToDelete) {
+          // Collect Images
+          if (itemToDelete.main_image_url) {
+            imagesToRemove.push(itemToDelete.main_image_url);
           }
-
-          if (item.technical_plans?.length > 0) {
-            await supabase.storage
-              .from("technical-plans")
-              .remove(item.technical_plans);
+          if (
+            itemToDelete.gallery_urls &&
+            itemToDelete.gallery_urls.length > 0
+          ) {
+            imagesToRemove.push(...itemToDelete.gallery_urls);
+          }
+          // Collect PDFs
+          if (
+            itemToDelete.technical_plans &&
+            itemToDelete.technical_plans.length > 0
+          ) {
+            docsToRemove.push(...itemToDelete.technical_plans);
           }
         }
 
+        // 3. EXECUTE STORAGE DELETE
+        // Note: We await these individually to ensure they process
+        if (imagesToRemove.length > 0) {
+          const { error: imgErr } = await supabase.storage
+            .from("property-images")
+            .remove(imagesToRemove);
+          if (imgErr) console.error("Image delete error:", imgErr);
+        }
+
+        if (docsToRemove.length > 0) {
+          const { error: docErr } = await supabase.storage
+            .from("technical-plans")
+            .remove(docsToRemove);
+          if (docErr) console.error("PDF delete error:", docErr);
+        }
+
+        // 4. DELETE DATABASE ROW
         const { error } = await supabase.from("listings").delete().eq("id", id);
 
         if (!error) {
           setListings((prev) => prev.filter((l) => l.id !== id));
-          toast.success("Listing and all files deleted successfully");
+          toast.success("Listing and files deleted successfully");
         } else {
           throw error;
         }
       } catch (err) {
-        console.error("Cleanup Error:", err);
-        toast.error(
-          "Database deleted, but some files might remain in storage.",
-        );
+        console.error("Delete Error:", err);
+        toast.error("Error removing listing");
       } finally {
         setIsDeleting(null);
       }
@@ -334,8 +369,17 @@ export default function ListingsClient({ initialListings }) {
                       {listing.address}
                     </div>
                   </td>
-                  <td className="p-4 text-sm text-admin-text-primary">
-                    {typeDef ? getLabel(typeDef, "en") : listing.type}
+                  <td className="p-4">
+                    <div className="flex items-center gap-2 text-sm text-admin-text-primary">
+                      {/* 🟢 Render the Icon if it exists */}
+                      {typeDef?.icon && (
+                        <typeDef.icon className="h-4 w-4 text-admin-text-muted" />
+                      )}
+
+                      <span>
+                        {typeDef ? getLabel(typeDef, "en") : listing.type}
+                      </span>
+                    </div>
                   </td>
                   <td className="p-4 text-center">
                     <span

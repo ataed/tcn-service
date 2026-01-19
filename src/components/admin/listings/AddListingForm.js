@@ -15,6 +15,7 @@ import {
 import { useListingForm } from "./form/useListingForm";
 import LocationSection from "./form/LocationSection";
 import FeaturesSection from "./form/FeaturesSection";
+import ContentSection from "./form/ContentSection";
 
 export default function AddListingForm() {
   const router = useRouter();
@@ -266,81 +267,8 @@ export default function AddListingForm() {
         </div>
       </div>
 
-      {/* ... SECTION 4 & 5 (Content & Location) stay the same ... */}
-      <div className="bg-admin-surface p-8 rounded-xl border border-admin-muted/10 shadow-sm">
-        {/* ... Content Inputs ... */}
-        <h3 className="text-sm font-bold text-admin-text-primary uppercase tracking-widest border-b border-admin-muted/10 pb-4 mb-6">
-          4. Content
-        </h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <div className="space-y-3">
-            <span className="text-[10px] font-bold bg-blue-100 text-blue-800 px-2 py-0.5 rounded">
-              ENGLISH
-            </span>
-            <input
-              name="title_en"
-              placeholder="Title"
-              className="w-full bg-admin-bg border-b border-admin-muted/20 p-2 text-sm"
-            />
-            <textarea
-              name="desc_en"
-              placeholder="Desc..."
-              className="w-full bg-admin-bg border border-admin-muted/20 rounded p-2 text-sm"
-              rows={3}
-            />
-          </div>
-          {/* ... other languages ... */}
-          <div className="space-y-3">
-            <span className="text-[10px] font-bold bg-indigo-100 text-indigo-800 px-2 py-0.5 rounded">
-              FRENCH
-            </span>
-            <input
-              name="title_fr"
-              placeholder="Titre"
-              className="w-full bg-admin-bg border-b border-admin-muted/20 p-2 text-sm"
-            />
-            <textarea
-              name="desc_fr"
-              placeholder="Desc..."
-              className="w-full bg-admin-bg border border-admin-muted/20 rounded p-2 text-sm"
-              rows={3}
-            />
-          </div>
-          <div className="space-y-3">
-            <span className="text-[10px] font-bold bg-yellow-100 text-yellow-800 px-2 py-0.5 rounded">
-              SPANISH
-            </span>
-            <input
-              name="title_es"
-              placeholder="Título"
-              className="w-full bg-admin-bg border-b border-admin-muted/20 p-2 text-sm"
-            />
-            <textarea
-              name="desc_es"
-              placeholder="Desc..."
-              className="w-full bg-admin-bg border border-admin-muted/20 rounded p-2 text-sm"
-              rows={3}
-            />
-          </div>
-          <div className="space-y-3" dir="rtl">
-            <span className="text-[10px] font-bold bg-green-100 text-green-800 px-2 py-0.5 rounded">
-              ARABIC
-            </span>
-            <input
-              name="title_ar"
-              placeholder="العنوان"
-              className="w-full bg-admin-bg border-b border-admin-muted/20 p-2 text-sm"
-            />
-            <textarea
-              name="desc_ar"
-              placeholder="الوصف"
-              className="w-full bg-admin-bg border border-admin-muted/20 rounded p-2 text-sm"
-              rows={3}
-            />
-          </div>
-        </div>
-      </div>
-
+    
+      <ContentSection />
       <LocationSection
         coords={coords}
         setCoords={setCoords}

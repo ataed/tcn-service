@@ -4,20 +4,17 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/utils/supabase/client";
 import { toast } from "react-hot-toast";
-import { AMENITIES } from "@/lib/schema/definitions";
+import { AMENITIES, LANGUAGE_CONFIG } from "@/lib/schema/definitions";
 
 export function useListingForm() {
   const router = useRouter();
   const supabase = createClient();
   const [loading, setLoading] = useState(false);
 
-  // --- MAP STATE ---
   const [coords, setCoords] = useState(null);
   const [mapUrl, setMapUrl] = useState("");
-
-  // --- 🟢 NEW: FILE STATE (Accumulators) ---
-  const [galleryItems, setGalleryItems] = useState([]); // [{ file, preview, id }]
-  const [pdfItems, setPdfItems] = useState([]); // [{ file, name, id }]
+  const [galleryItems, setGalleryItems] = useState([]);
+  const [pdfItems, setPdfItems] = useState([]);
 
   // --- HANDLERS ---
   const handleMapPaste = (e) => {
@@ -82,19 +79,18 @@ export function useListingForm() {
     setPdfItems((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // --- SUBMIT LOGIC ---
   const handleFormSubmit = async (e, { selectedType, isOffPlan }) => {
     e.preventDefault();
     setLoading(true);
-    const toastId = toast.loading("Uploading assets...");
+    const toastId = toast.loading("Publishing asset to inventory...");
 
     try {
       const formData = new FormData(e.currentTarget);
 
+      // 🟢 Helper for Storage
       const uploadFile = async (file, bucket, folder) => {
         if (!file || !file.name) return null;
-        const cleanName = file.name.replace(/[^a-zA-Z0-9.]/g, "_");
-        const fileName = `${Date.now()}-${cleanName}`;
+        const fileName = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.]/g, "_")}`;
         const { data, error } = await supabase.storage
           .from(bucket)
           .upload(`${folder}/${fileName}`, file);
@@ -102,41 +98,38 @@ export function useListingForm() {
         return data.path;
       };
 
-      // 1. Upload Main Image (Still from Form directly)
-      const mainImg = await uploadFile(
-        formData.get("main_image"),
-        "property-images",
-        "main",
-      );
-
-      // 🟢 2. Upload Gallery (From STATE, not FormData)
-      const galleryUrls = await Promise.all(
-        galleryItems.map((item) =>
-          uploadFile(item.file, "property-images", "gallery"),
+      // 1. Assets Upload
+      const [mainImg, galleryUrls, pdfUrls] = await Promise.all([
+        uploadFile(formData.get("main_image"), "property-images", "main"),
+        Promise.all(
+          galleryItems.map((item) =>
+            uploadFile(item.file, "property-images", "gallery"),
+          ),
         ),
-      );
-
-      // 🟢 3. Upload PDFs (From STATE, not FormData)
-      const pdfUrls = await Promise.all(
-        pdfItems.map((item) =>
-          uploadFile(item.file, "technical-plans", "uploads"),
+        Promise.all(
+          pdfItems.map((item) =>
+            uploadFile(item.file, "technical-plans", "uploads"),
+          ),
         ),
-      );
+      ]);
 
-      // 4. Amenities
+      // 2. Multilingual Amenities logic
       const amenitiesData = {};
       AMENITIES.forEach((a) => {
         if (formData.get(a.id) === "on") amenitiesData[a.id] = true;
       });
 
-      // 5. Insert
-      const { error } = await supabase.from("listings").insert({
+      // 3. 🟢 THE SYNCED PAYLOAD (Matches Edit Form & V2 Schema)
+      const insertData = {
         type: selectedType,
-        price: formData.get("price"),
-        sqft: formData.get("sqft"),
         status: "pending",
-
-        // Content
+        is_off_plan: isOffPlan,
+        price: parseFloat(formData.get("price")),
+        sqft: parseFloat(formData.get("sqft")),
+        //FOR PUBLIC FILTER(EASY ACCESS)
+        bedrooms: parseInt(formData.get("bedrooms")) || 0,
+        bathrooms: parseInt(formData.get("bathrooms")) || 0,
+        // Multilingual Copy (Title & Desc)
         title_en: formData.get("title_en"),
         title_fr: formData.get("title_fr"),
         title_es: formData.get("title_es"),
@@ -146,34 +139,40 @@ export function useListingForm() {
         desc_es: formData.get("desc_es"),
         desc_ar: formData.get("desc_ar"),
 
-        // Location
+        // 🟢 Multilingual Location (All 8 Fields from Schema)
         city_en: formData.get("city_en"),
+        city_fr: formData.get("city_fr"),
+        city_es: formData.get("city_es"),
+        city_ar: formData.get("city_ar"),
         district_en: formData.get("district_en"),
+        district_fr: formData.get("district_fr"),
+        district_es: formData.get("district_es"),
+        district_ar: formData.get("district_ar"),
+
+        // Mapping GPS & Shared Address
         address: formData.get("address"),
         latitude: coords?.lat || null,
         longitude: coords?.lng || null,
-
-        // Media
+        map_address: mapUrl || null,
+        // Media Paths
         main_image_url: mainImg,
-        gallery_urls: galleryUrls.filter((u) => u),
-        technical_plans: pdfUrls.filter((u) => u),
+        gallery_urls: galleryUrls.filter(Boolean),
+        technical_plans: pdfUrls.filter(Boolean),
 
+        // 🟢 Attributes JSONB
         attributes: {
-          bedrooms: ["villa", "apartment", "penthouse"].includes(selectedType)
-            ? formData.get("bedrooms")
-            : null,
-          bathrooms: ["villa", "apartment", "penthouse"].includes(selectedType)
-            ? formData.get("bathrooms")
-            : null,
+          bedrooms: parseInt(formData.get("bedrooms")) || 0,
+          bathrooms: parseInt(formData.get("bathrooms")) || 0,
           delivery_date: isOffPlan ? formData.get("delivery_date") : null,
+          zoning_type: formData.get("zoning_type") || null,
           amenities: amenitiesData,
         },
-        is_featured: false,
-        is_off_plan: isOffPlan,
-      });
+      };
+
+      const { error } = await supabase.from("listings").insert([insertData]);
 
       if (error) throw error;
-      toast.success("Created!", { id: toastId });
+      toast.success("Asset registered successfully", { id: toastId });
       router.push("/admin/listings");
       router.refresh();
     } catch (err) {
@@ -191,7 +190,6 @@ export function useListingForm() {
     setMapUrl,
     handleMapPaste,
     handleFormSubmit,
-
     galleryItems,
     handleAddGallery,
     handleRemoveGallery,
