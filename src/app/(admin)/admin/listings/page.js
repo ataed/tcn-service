@@ -5,10 +5,15 @@ export default async function ListingsPage() {
   const supabase = await createClient();
 
   // Fetch data on the server for instant SEO and speed
-  const { data: listings } = await supabase
+  const { data: listings, error } = await supabase
     .from("listings")
     .select("*")
     .order("created_at", { ascending: false });
+  if (error) {
+    console.error("Supabase Error:", error); // Check your server terminal
+  }
+
+  console.log("Listings found:", listings?.length);
 
   return (
     <div className="max-w-7xl mx-auto">

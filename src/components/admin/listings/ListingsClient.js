@@ -35,7 +35,7 @@ export default function ListingsClient({ initialListings }) {
   const toggleFeatured = async (id, currentStatus) => {
     // Optimistic Update (Update UI immediately)
     const updatedListings = listings.map((l) =>
-      l.id === id ? { ...l, is_featured: !currentStatus } : l
+      l.id === id ? { ...l, is_featured: !currentStatus } : l,
     );
     setListings(updatedListings);
 
@@ -49,7 +49,7 @@ export default function ListingsClient({ initialListings }) {
       setListings(listings); // Revert on error
     } else {
       toast.success(
-        currentStatus ? "Removed from Featured" : "Added to Featured"
+        currentStatus ? "Removed from Featured" : "Added to Featured",
       );
     }
   };
@@ -57,7 +57,7 @@ export default function ListingsClient({ initialListings }) {
   const handleDelete = async (id) => {
     if (
       !confirm(
-        "Are you sure you want to delete this property? This cannot be undone."
+        "Are you sure you want to delete this property? This cannot be undone.",
       )
     )
       return;
@@ -76,9 +76,13 @@ export default function ListingsClient({ initialListings }) {
 
   // --- FILTERING LOGIC ---
   const filteredListings = listings.filter((l) => {
+    const title = l.title_en || l.title || "";
+    const address = l.address || "";
+
     const matchesSearch =
-      l.title?.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      l.address?.toLowerCase().includes(searchQuery.toLowerCase());
+      title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      address.toLowerCase().includes(searchQuery.toLowerCase());
+
     const matchesType = filterType === "all" || l.type === filterType;
     return matchesSearch && matchesType;
   });
@@ -165,6 +169,7 @@ export default function ListingsClient({ initialListings }) {
                           fill
                           className="object-cover"
                           sizes="64px"
+                          unoptimized
                         />
                       )}
                     </div>
@@ -262,6 +267,7 @@ export default function ListingsClient({ initialListings }) {
                     fill
                     className="object-cover"
                     sizes="96px"
+                    unoptimized
                   />
                 )}
               </div>
@@ -271,7 +277,7 @@ export default function ListingsClient({ initialListings }) {
                 <div>
                   <div className="flex justify-between items-start">
                     <h3 className="text-sm font-semibold text-admin-text-primary truncate pr-2">
-                      {listing.title}
+                      {listing.title_en || "Untitled Property"}
                     </h3>
                     <button
                       onClick={() =>
@@ -286,7 +292,7 @@ export default function ListingsClient({ initialListings }) {
                     </button>
                   </div>
                   <p className="text-xs text-admin-text-muted truncate mt-1">
-                    {listing.address}
+                    {listing.address || "No address provided"}
                   </p>
                 </div>
 
