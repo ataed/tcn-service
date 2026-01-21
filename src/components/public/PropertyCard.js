@@ -1,6 +1,8 @@
 "use client";
+
 import Link from "next/link";
-import Image from "next/image";
+// 🟢 REPLACED: Import the new loader instead of standard Image
+import ImageWithLoader from "@/components/ui/ImageWithLoader";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
 import { useTranslations } from "next-intl";
@@ -45,20 +47,21 @@ export default function PropertyCard({ property, locale, priority = false }) {
       <article className="relative flex flex-col h-full bg-primary-900/40 backdrop-blur-sm border border-white/5 rounded-2xl overflow-hidden hover:border-accent-500/50 hover:shadow-2xl hover:shadow-accent-500/10 transition-all duration-500 group-hover:-translate-y-1">
         {/* IMAGE CONTAINER */}
         <div className="relative h-72 w-full overflow-hidden">
-          {/* 🟢 NEW BADGE SYSTEM */}
+          {/* BADGES */}
           <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2">
             {/* Property Type Badge */}
             <span className="px-3 py-1 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest border border-white/10 rounded-full">
               {property.type}
             </span>
 
-            {/* Off-Plan Badge (Gold/Accent) */}
+            {/* Off-Plan Badge */}
             {property.is_off_plan && (
               <span className="px-3 py-1 bg-accent-600/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg border border-accent-400/20">
                 {t("offPlan")}
               </span>
             )}
 
+            {/* Rent Badge */}
             {property.attributes?.purpose === "rent" && (
               <span className="px-3 py-1 bg-white text-primary-950 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
                 {t("forRent") || "For Rent"}
@@ -66,17 +69,19 @@ export default function PropertyCard({ property, locale, priority = false }) {
             )}
           </div>
 
-          <Image
+          {/* 🟢 REPLACED: ImageWithLoader */}
+          <ImageWithLoader
             src={getImageUrl(property.main_image_url)}
             alt={displayTitle}
             fill
-            className="object-cover transition-transform duration-1000 group-hover:scale-110"
+            // We apply the hover scale to the wrapper now.
+            // 'object-cover' is already handled inside ImageWithLoader.
+            className="h-full w-full transition-transform duration-1000 group-hover:scale-110"
             unoptimized
-            // This adds loading="eager" and fetchPriority="high" automatically
             priority={priority}
           />
 
-          <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/20 to-transparent opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/20 to-transparent opacity-80 pointer-events-none" />
 
           <div className="absolute bottom-4 left-4 right-4 z-20">
             <div className="text-2xl md:text-3xl font-serif italic text-white drop-shadow-lg">
@@ -100,7 +105,7 @@ export default function PropertyCard({ property, locale, priority = false }) {
 
           <div className="w-full h-px bg-white/5"></div>
 
-          {/* 🟢 SPECS: Only show if value > 0 */}
+          {/* SPECS */}
           <div className="flex items-center justify-start gap-8 text-sm text-white/60">
             {beds > 0 && (
               <div className="flex flex-col items-center gap-1">
@@ -135,7 +140,6 @@ export default function PropertyCard({ property, locale, priority = false }) {
               </div>
             )}
 
-            {/* If all are 0 (e.g. Land), show a CTA label */}
             {beds === 0 && baths === 0 && area === 0 && (
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-500/80">
                 {t("viewDetails") || "View Details"}

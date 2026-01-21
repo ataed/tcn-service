@@ -13,6 +13,7 @@ import {
 
 // Ensure this path matches your project structure
 import { PROPERTY_TYPES } from "@/lib/schema/definitions";
+import heroBg from "../../../public/hero-bg-luxury.jpg";
 
 export default function HeroSection({ locale }) {
   const t = useTranslations("Hero");
@@ -41,9 +42,10 @@ export default function HeroSection({ locale }) {
       {/* 1. CINEMATIC BACKGROUND */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-bg-luxury.jpg"
+          src={heroBg} //
           alt="Luxury Real Estate Morocco"
           fill
+          placeholder="blur" // 🟢 Activates the automatic luxury blur
           className="object-cover object-center animate-subtle-zoom opacity-60"
           priority
         />

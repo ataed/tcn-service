@@ -142,37 +142,37 @@ export default async function PropertyDetailsPage({ params }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* LEFT COLUMN (Details) */}
         <div className="lg:col-span-2 space-y-12">
-          {/* 🟢 FIXED SPECS BAR: Uses Flex + Conditionals to hide 0 items */}
+          {/* 🟢 FIXED SPECS BAR: Mobile-Proof & RTL-Ready */}
           {(beds > 0 || baths > 0 || area > 0) && (
-            <div className="flex flex-wrap items-center justify-center p-6 bg-white/5 rounded-2xl border border-white/10 divide-x divide-white/10">
+            <div className="flex flex-nowrap items-center w-full bg-white/5 rounded-2xl border border-white/10 divide-x divide-white/10 rtl:divide-x-reverse overflow-hidden">
               {beds > 0 && (
-                <div className="px-8 lg:px-12 text-center">
-                  <div className="text-2xl font-serif text-accent-500">
+                <div className="flex-1 py-4 px-2 text-center group hover:bg-white/[0.02] transition-colors">
+                  <div className="text-xl md:text-2xl font-serif text-accent-500 leading-none mb-1">
                     {beds}
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-white/50 truncate">
                     {t("beds")}
                   </div>
                 </div>
               )}
 
               {baths > 0 && (
-                <div className="px-8 lg:px-12 text-center">
-                  <div className="text-2xl font-serif text-accent-500">
+                <div className="flex-1 py-4 px-2 text-center group hover:bg-white/[0.02] transition-colors">
+                  <div className="text-xl md:text-2xl font-serif text-accent-500 leading-none mb-1">
                     {baths}
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-white/50 truncate">
                     {t("baths")}
                   </div>
                 </div>
               )}
 
               {area > 0 && (
-                <div className="px-8 lg:px-12 text-center">
-                  <div className="text-2xl font-serif text-accent-500">
+                <div className="flex-1 py-4 px-2 text-center group hover:bg-white/[0.02] transition-colors">
+                  <div className="text-xl md:text-2xl font-serif text-accent-500 leading-none mb-1">
                     {area}
                   </div>
-                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                  <div className="text-[9px] md:text-[10px] uppercase tracking-widest text-white/50 truncate">
                     {t("sqft")}
                   </div>
                 </div>
