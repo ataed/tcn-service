@@ -27,7 +27,7 @@ export default function ContentSection({ listing }) {
           >
             {/* Theme-Aware Language Badge */}
             <span
-              className={`absolute top-0 ${lang.rtl ? "left-0 rounded-br-xl border-b border-r" : "right-0 rounded-bl-xl border-b border-l"} text-[9px] font-black uppercase px-3 py-1 ${lang.badge} shadow-sm`}
+              className={`absolute top-0 left-0 rounded-br-xl border-b border-r"  text-[9px] font-black uppercase px-3 py-1 ${lang.badge} shadow-sm`}
             >
               {lang.label}
             </span>
@@ -36,15 +36,15 @@ export default function ContentSection({ listing }) {
               {/* Title Input */}
               <div className="space-y-1">
                 <label
-                  className={`text-[10px] font-bold uppercase tracking-tighter ${lang.text} opacity-80`}
+                  className={`text-[10px] font-bold uppercase tracking-tighter ${lang.text}  opacity-80`}
                 >
                   Property Headline
                 </label>
                 <input
                   name={`title_${lang.id}`}
                   defaultValue={listing?.[`title_${lang.id}`] || ""}
-                  placeholder="e.g. Luxury Villa with Pool"
-                  required={lang.id === "en"} // Example: Require English
+                  placeholder={lang.placeholderTitle}
+                  required={lang.id === "en"}
                   className="w-full bg-admin-bg border border-admin-muted/20 rounded-xl p-3 text-sm font-bold focus:border-admin-accent outline-none text-admin-text-primary transition-colors"
                 />
               </div>
@@ -60,7 +60,7 @@ export default function ContentSection({ listing }) {
                   name={`desc_${lang.id}`}
                   defaultValue={listing?.[`desc_${lang.id}`] || ""}
                   rows={4}
-                  placeholder="Detailed property description..."
+                  placeholder={lang.placeholderDesc}
                   className="w-full bg-admin-bg border border-admin-muted/20 rounded-xl p-3 text-xs focus:border-admin-accent outline-none text-admin-text-primary transition-colors resize-none"
                 />
               </div>

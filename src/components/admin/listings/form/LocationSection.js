@@ -40,7 +40,7 @@ export default function LocationSection({
           >
             {/* Theme-Aware Language Badge */}
             <span
-              className={`absolute top-0 ${lang.rtl ? "left-0 rounded-br-xl border-b border-r" : "right-0 rounded-bl-xl border-b border-l"} text-[9px] font-black uppercase px-3 py-1 ${lang.badge} shadow-sm`}
+              className={`absolute top-0 left-0 rounded-br-xl border-b border-r text-[9px] font-black uppercase px-3 py-1 ${lang.badge} shadow-sm`}
             >
               {lang.label}
             </span>
@@ -56,7 +56,7 @@ export default function LocationSection({
                 <input
                   name={`city_${lang.id}`}
                   defaultValue={listing?.[`city_${lang.id}`]}
-                  placeholder="City"
+                  placeholder={lang.placeholderCity}
                   className="w-full bg-admin-bg border border-admin-muted/20 rounded-xl p-2.5 text-sm focus:border-admin-accent outline-none text-admin-text-primary transition-colors"
                 />
               </div>
@@ -71,7 +71,7 @@ export default function LocationSection({
                 <input
                   name={`district_${lang.id}`}
                   defaultValue={listing?.[`district_${lang.id}`]}
-                  placeholder="District"
+                  placeholder={lang.placeholderDistrict}
                   className="w-full bg-admin-bg border border-admin-muted/20 rounded-xl p-2.5 text-sm focus:border-admin-accent outline-none text-admin-text-primary transition-colors"
                 />
               </div>

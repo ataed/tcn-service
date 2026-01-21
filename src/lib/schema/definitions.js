@@ -250,6 +250,11 @@ export const LANGUAGE_CONFIG = {
     badge:
       "bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/40 dark:text-blue-300 dark:border-blue-800",
     rtl: false,
+    placeholderTitle: "e.g. Modern Luxury Villa with Sea View",
+    placeholderDesc:
+      "Enter a detailed description of the property features, location, and amenities...",
+    placeholderCity: "e.g. Tangier",
+    placeholderDistrict: "e.g. Malabata",
   },
   fr: {
     id: "fr",
@@ -260,6 +265,11 @@ export const LANGUAGE_CONFIG = {
     badge:
       "bg-indigo-100 text-indigo-700 border-indigo-200 dark:bg-indigo-900/40 dark:text-indigo-300 dark:border-indigo-800",
     rtl: false,
+    placeholderTitle: "ex. Villa de Luxe Moderne avec Vue Mer",
+    placeholderDesc:
+      "Entrez une description détaillée des caractéristiques, de l'emplacement et des équipements...",
+    placeholderCity: "ex. Tanger",
+    placeholderDistrict: "ex. Malabata",
   },
   es: {
     id: "es",
@@ -270,6 +280,11 @@ export const LANGUAGE_CONFIG = {
     badge:
       "bg-yellow-100 text-yellow-700 border-yellow-200 dark:bg-yellow-900/40 dark:text-yellow-300 dark:border-yellow-800",
     rtl: false,
+    placeholderTitle: "ej. Villa de Lujo Moderna con Vistas al Mar",
+    placeholderDesc:
+      "Introduzca una descripción detallada de las características, ubicación y servicios...",
+    placeholderCity: "ej. Tánger",
+    placeholderDistrict: "ej. Malabata",
   },
   ar: {
     id: "ar",
@@ -280,5 +295,10 @@ export const LANGUAGE_CONFIG = {
     badge:
       "bg-green-100 text-green-700 border-green-200 dark:bg-green-900/40 dark:text-green-300 dark:border-green-800",
     rtl: true,
+    placeholderTitle: "مثال: فيلا فاخرة حديثة مع إطلالة على البحر",
+    placeholderDesc:
+      "أدخل وصفاً مفصلاً لمميزات العقار والموقع ووسائل الراحة...",
+    placeholderCity: "مثال: طنجة",
+    placeholderDistrict: "مثال: حي ملابطا",
   },
 };
