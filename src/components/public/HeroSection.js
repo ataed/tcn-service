@@ -52,7 +52,7 @@ export default function HeroSection({ locale }) {
       </div>
 
       {/* 2. MAIN CONTENT */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full pt-20 pb-12">
+      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center h-full lg:pt-40 pt-32 pb-12">
         {/* HEADLINE */}
         <h1 className="text-center tracking-tight mb-8 drop-shadow-2xl animate-fade-in-up">
           <span className="block font-medium mb-2 text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white">

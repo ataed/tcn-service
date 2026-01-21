@@ -65,8 +65,11 @@ export default function PropertyGallery({ images }) {
                 setCurrentIndex(idx);
                 setIsOpen(true);
               }}
+              // className={`relative cursor-pointer overflow-hidden rounded-2xl group border border-white/10 ${
+              //   isFirst ? "md:row-span-2 md:h-full" : "h-[190px] md:h-auto"
+              // }`}
               className={`relative cursor-pointer overflow-hidden rounded-2xl group border border-white/10 ${
-                isFirst ? "md:row-span-2 md:h-full" : "h-[190px] md:h-auto"
+                isFirst ? "md:row-span-2 md:h-full" : "h-[190px] md:h-full"
               }`}
             >
               <Image
@@ -139,6 +142,7 @@ export default function PropertyGallery({ images }) {
               quality={100}
               priority
               unoptimized
+              sizes="100vw"
             />
           </div>
 

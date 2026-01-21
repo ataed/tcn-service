@@ -15,7 +15,7 @@ import {
 } from "@heroicons/react/24/outline";
 
 import PropertyMapLoader from "@/components/public/PropertyMapLoader";
-import PropertyGallery from "@/components/public/PropertyGallery"; // 🟢 IMPORT ADDED
+import PropertyGallery from "@/components/public/PropertyGallery";
 import { AMENITIES } from "@/lib/schema/definitions";
 
 export default async function PropertyDetailsPage({ params }) {
@@ -71,7 +71,6 @@ export default async function PropertyDetailsPage({ params }) {
   };
 
   const gallery = property.gallery_urls || [];
-  // 🟢 PRE-PROCESS URLs for the client component
   const fullGalleryUrls = gallery.map((url) => getPublicUrl(url));
 
   const files = property.technical_plans || [];
@@ -143,27 +142,43 @@ export default async function PropertyDetailsPage({ params }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12">
         {/* LEFT COLUMN (Details) */}
         <div className="lg:col-span-2 space-y-12">
-          {/* SPECS BAR */}
-          <div className="grid grid-cols-3 gap-4 p-6 bg-white/5 rounded-2xl border border-white/10">
-            <div className="text-center border-r border-white/10">
-              <div className="text-2xl font-serif text-accent-500">{beds}</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/50">
-                {t("beds")}
-              </div>
+          {/* 🟢 FIXED SPECS BAR: Uses Flex + Conditionals to hide 0 items */}
+          {(beds > 0 || baths > 0 || area > 0) && (
+            <div className="flex flex-wrap items-center justify-center p-6 bg-white/5 rounded-2xl border border-white/10 divide-x divide-white/10">
+              {beds > 0 && (
+                <div className="px-8 lg:px-12 text-center">
+                  <div className="text-2xl font-serif text-accent-500">
+                    {beds}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                    {t("beds")}
+                  </div>
+                </div>
+              )}
+
+              {baths > 0 && (
+                <div className="px-8 lg:px-12 text-center">
+                  <div className="text-2xl font-serif text-accent-500">
+                    {baths}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                    {t("baths")}
+                  </div>
+                </div>
+              )}
+
+              {area > 0 && (
+                <div className="px-8 lg:px-12 text-center">
+                  <div className="text-2xl font-serif text-accent-500">
+                    {area}
+                  </div>
+                  <div className="text-[10px] uppercase tracking-widest text-white/50">
+                    {t("sqft")}
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="text-center border-r border-white/10">
-              <div className="text-2xl font-serif text-accent-500">{baths}</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/50">
-                {t("baths")}
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="text-2xl font-serif text-accent-500">{area}</div>
-              <div className="text-[10px] uppercase tracking-widest text-white/50">
-                {t("sqft")}
-              </div>
-            </div>
-          </div>
+          )}
 
           {/* DESCRIPTION */}
           <div>
@@ -220,13 +235,12 @@ export default async function PropertyDetailsPage({ params }) {
             </div>
           )}
 
-          {/* 🟢 GALLERY - REPLACED WITH PROFESSIONAL COMPONENT */}
+          {/* GALLERY */}
           {fullGalleryUrls.length > 0 && (
             <div>
               <h3 className="text-2xl font-serif mb-6 border-b border-white/10 pb-4">
                 {t("gallery")}
               </h3>
-              {/* Pass the processed array of full URLs */}
               <PropertyGallery images={fullGalleryUrls} />
             </div>
           )}
@@ -287,7 +301,7 @@ export default async function PropertyDetailsPage({ params }) {
           )}
         </div>
 
-        {/* RIGHT COLUMN (Sticky Agent) */}
+        {/* RIGHT COLUMN */}
         <div className="lg:col-span-1">
           <div className="sticky top-32 space-y-6">
             <div className="p-8 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-sm">

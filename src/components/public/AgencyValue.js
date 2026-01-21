@@ -79,6 +79,7 @@ export default function AgencyValue({ locale }) {
               alt="Luxury Interior Design"
               fill
               className="object-cover transition-transform duration-[2s] group-hover:scale-105"
+              sizes="100vw"
             />
             {/* Dark Gradient Overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-transparent to-transparent opacity-60"></div>

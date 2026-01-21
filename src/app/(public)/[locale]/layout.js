@@ -86,12 +86,7 @@ export default async function LocaleLayout({ children, params }) {
 
   return (
     // 🟢 translate="no" stops the browser pop-up
-    <html
-      lang={locale}
-      dir={direction}
-      translate="no"
-      className="scroll-smooth"
-    >
+    <html lang={locale} dir={direction} translate="no">
       <body
         className={`${fontClassName} antialiased relative bg-primary-950 text-primary-100 min-h-screen flex flex-col selection:bg-accent-500 selection:text-white`}
       >
