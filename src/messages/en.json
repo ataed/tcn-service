@@ -1,0 +1,205 @@
+{
+  "Navigation": {
+    "home": "Home",
+    "buy": "Buy",
+    "rent": "Rent",
+    "offPlan": "Off-Plan",
+    "sell": "Sell",
+    "about": "Our Story",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "titleLine1": "Discover the Exceptional",
+    "titleLine2": "Prime Real Estate in Morocco",
+    "allCities": "All Cities",
+    "propertyType": "Property Type",
+    "subtitle": "Exclusive portfolio of villas, penthouses, and off-plan investments tailored for the discerning buyer.",
+    "searchPlaceholder": "City, Project, or Reference...",
+    "searchButton": "Search",
+    "filters": "Filters",
+    "moreOptions": "More options",
+    "tabs": {
+      "buy": "Buy",
+      "rent": "Rent"
+    },
+    "curatedPortfolio": "Curated Portfolio",
+    "privateClient": "Private Client Advisory"
+  },
+  "Featured": {
+    "title": "Featured",
+    "titleHighlight": "Collection",
+    "subtitle": "Our most exclusive opportunities, hand-picked for the discerning investor.",
+    "viewAll": "View All Properties",
+    "badges": {
+      "offPlan": "Off-Plan",
+      "new": "New"
+    }
+  },
+  "Services": {
+    "header": "Our Expertise",
+    "title": "Holistic Real Estate",
+    "titleHighlight": "Solutions",
+    "subtitle": "Beyond transactions, we offer a full spectrum of advisory services tailored to the needs of the modern investor.",
+    "cards": {
+      "buySell": {
+        "title": "Buying & Selling",
+        "desc": "Expert guidance through the acquisition and sale of prime residential and commercial assets."
+      },
+      "offPlan": {
+        "title": "Off-Plan Investment",
+        "desc": "Exclusive access to high-yield development projects before they hit the open market."
+      },
+      "management": {
+        "title": "Asset Management",
+        "desc": "Comprehensive property management designed to maximize returns and minimize effort."
+      }
+    },
+    "learnMore": "Learn More"
+  },
+  "Heritage": {
+    "tagline": "Our Heritage",
+    "title": "Redefining the",
+    "titleHighlight": "Art of Living",
+    "p1": "We do not simply sell properties; we curate lifestyles. TCN Real Estate was founded on the belief that a home is more than an asset—it is the foundation of your legacy.",
+    "p2": "From private off-market villas to investment-grade assets, our advisory approach ensures your portfolio grows with precision.",
+    "stats": {
+      "sold": "Properties Sold",
+      "volume": "Volume Traded"
+    },
+    "button": "Read Our Story",
+    "quote": "Excellence is not an act, but a habit. We deliver nothing less.",
+    "founder": "Mhamed Chrif — Founder"
+  },
+  "Footer": {
+    "brandDescription": "The leading authority in Moroccan luxury real estate. We bridge the gap between discerning global investors and exclusive local opportunities.",
+    "colDiscover": "Discover",
+    "colContact": "Contact",
+    "colNewsletter": "Private Briefing",
+    "newsletterText": "Join our exclusive list for off-market opportunities.",
+    "emailPlaceholder": "Email Address",
+    "subscribe": "Subscribe",
+    "copyright": "All rights reserved. Operated by Tangercybernegoce S.A.R.L.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "developedBy": "Developed by"
+  },
+  "Search": {
+    "titleAll": "Premium",
+    "highlightAll": "Properties",
+    "titleSale": "Properties for",
+    "highlightSale": "Sale",
+    "titleRent": "Properties for",
+    "highlightRent": "Rent",
+    "count": "{count} Properties found",
+    "filters": "Filters",
+    "clearFilters": "Reset All",
+    "anyPurpose": "Any Purpose",
+    "allCities": "All Cities",
+    "allTypes": "All Types",
+    "priceRange": "Price Range (MAD)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "amenities": "Amenities",
+    "offPlanSubtitle": "Explore exclusive off-plan investment opportunities in Morocco.",
+    "noResultsTitle": "No Properties Found",
+    "noResultsDesc": "We couldn't find any properties matching your current filters. Try adjusting your price range or location.",
+    "buy": "Buy",
+    "rent": "Rent"
+  },
+  "Property": {
+    "beds": "Beds",
+    "baths": "Baths",
+    "sqft": "m²",
+    "month": "/ Month",
+    "backToSearch": "Back to Search",
+    "forRent": "For Rent",
+    "forSale": "For Sale",
+    "guidePrice": "Guide Price",
+    "about": "About this property",
+    "features": "Features & Specifications",
+    "zoning": "Zoning Type",
+    "deliveryDate": "Delivery Date",
+    "gallery": "Gallery",
+    "location": "Location",
+    "openMaps": "Open in Google Maps",
+    "noCoords": "Location data not available",
+    "documents": "Documents & Plans",
+    "document": "Document",
+    "download": "Download PDF",
+    "interested": "Interested?",
+    "contactText": "Contact our private client team to arrange a viewing.",
+    "contactButton": "Contact Agent",
+    "reference": "Reference",
+    "offPlan": "Off-Plan"
+  },
+  "Contact": {
+    "title": "Private Office",
+    "subtitle": "Get in Touch",
+    "description": "Whether you are looking to acquire a prime asset or divest from your portfolio, our private client team is at your disposal.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number",
+      "subject": "Subject",
+      "message": "How can we assist you?",
+      "submit": "Request Consultation",
+      "sending": "Sending...",
+      "success": "Request Sent Successfully"
+    },
+    "info": {
+      "visit": "Visit Our HQ",
+      "call": "Private Line",
+      "email": "Email Us",
+      "address": "123 Boulevard d'Anfa, Casablanca, Morocco"
+    }
+  },
+  "Sell": {
+    "badge": "Coming Soon",
+    "title": "A New Way to",
+    "titleHighlight": "Sell Exclusive Assets",
+    "description": "We are crafting a premier digital portal for property owners to list and manage their real estate assets directly. While we finalize this feature, our expert team is available to handle your listing personally.",
+    "cta": "Contact Our Agents",
+    "backHome": "Return Home",
+    "trustText": "Trusted by Morocco's leading investors and developers."
+  },
+  "Error": {
+    "pageNotFound": "Page Not Found",
+    "notFoundDesc": "The property or page you are looking for might have been moved or no longer exists.",
+    "backHome": "Return Home",
+    "goBack": "Go Back",
+    "somethingWentWrong": "Something went wrong",
+    "errorDesc": "We apologize for the inconvenience. Our team has been notified. Please try refreshing the page.",
+    "tryAgain": "Try Again"
+  },
+  "About": {
+    "badge": "Since 2012",
+    "heroTitle": "Curating Morocco's",
+    "heroHighlight": "Finest Estates",
+    "heroDesc": "We are more than a real estate agency. We are the architects of your new lifestyle, bridging the gap between discerning global investors and exclusive local opportunities.",
+    "statYears": "Years of Excellence",
+    "statProperties": "Properties Sold",
+    "statClients": "Happy Clients",
+    "statAwards": "Industry Awards",
+    "storyTitle": "A Legacy of Trust & Elegance",
+    "storyP1": "Founded with a vision to redefine luxury real estate in Morocco, TCN Real Estate has established itself as the premier partner for high-net-worth individuals seeking exceptional properties.",
+    "storyP2": "Our approach is rooted in discretion, market intelligence, and a deep appreciation for architectural beauty. We don't just sell homes; we curate environments where life's best moments happen.",
+    "founderRole": "Founder & CEO",
+    "quote": "Luxury is in each detail.",
+    "valuesTitle": "Our Core Values",
+    "valuesDesc": "The principles that guide every interaction and transaction.",
+    "value1Title": "Integrity",
+    "value1Desc": "We believe in transparency and honesty as the foundation of every relationship.",
+    "value2Title": "Excellence",
+    "value2Desc": "We pursue perfection in our portfolio curation and client service.",
+    "value3Title": "Global Reach",
+    "value3Desc": "Connecting local masterpieces with an international audience.",
+    "value4Title": "Discretion",
+    "value4Desc": "Privacy is our utmost priority for our exclusive clientele.",
+    "ctaTitle": "Ready to Find Your Dream Home?",
+    "ctaBrowse": "Browse Collection",
+    "ctaContact": "Contact Us",
+    "founderName": "Mhamed Chrif"
+  }
+}

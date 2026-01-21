@@ -14,7 +14,8 @@ import {
   LockClosedIcon,
   ExclamationCircleIcon,
   CurrencyDollarIcon,
-  CalendarDaysIcon, // New Icon for Date
+  CalendarDaysIcon,
+  TagIcon, // 🟢 NEW ICON
 } from "@heroicons/react/24/outline";
 
 import {
@@ -40,6 +41,9 @@ export default function EditListingForm({ listing }) {
 
   const [status, setStatus] = useState(listing.status || "pending");
   const [isOffPlan, setIsOffPlan] = useState(listing.is_off_plan || false);
+
+  // 🟢 NEW STATE: Initialize Purpose (Default to 'sale' if missing)
+  const [purpose, setPurpose] = useState(listing.attributes?.purpose || "sale");
 
   const selectedType = listing.type || "villa";
   const typeDef = PROPERTY_TYPES.find((t) => t.id === selectedType);
@@ -78,8 +82,7 @@ export default function EditListingForm({ listing }) {
         bedrooms: parseInt(formData.get("bedrooms")) || 0,
         bathrooms: parseInt(formData.get("bathrooms")) || 0,
 
-        // 🟢 TRANSACTION SYNC
-        // If status is sold, save the new values. Otherwise, clear them or keep null.
+        // TRANSACTION SYNC
         sold_price:
           status === "sold" ? parseFloat(formData.get("sold_price")) : null,
         sold_date: status === "sold" ? formData.get("sold_date") : null,
@@ -110,6 +113,8 @@ export default function EditListingForm({ listing }) {
 
         attributes: {
           ...listing.attributes,
+
+          purpose: purpose,
           bedrooms: parseInt(formData.get("bedrooms")) || 0,
           bathrooms: parseInt(formData.get("bathrooms")) || 0,
           delivery_date: isOffPlan ? formData.get("delivery_date") : null,
@@ -260,7 +265,7 @@ export default function EditListingForm({ listing }) {
 
       {/* --- SIDEBAR --- */}
       <div className="lg:col-span-4 space-y-6">
-        {/* 🟢 TRANSACTION HUB */}
+        {/* TRANSACTION HUB */}
         <div className="bg-admin-surface border border-admin-muted/10 rounded-2xl p-6 shadow-sm space-y-6">
           <div className="space-y-2">
             <label className="text-[10px] font-black uppercase text-admin-text-muted tracking-widest">
@@ -279,7 +284,42 @@ export default function EditListingForm({ listing }) {
             </select>
           </div>
 
-          {/* 🟢 DYNAMIC SOLD INPUTS */}
+          {/* 🟢 DYNAMIC PURPOSE SELECTOR (Only shows when Available) */}
+          {status === "available" && (
+            <div className="space-y-4 pt-4 border-t border-admin-muted/10 animate-in fade-in slide-in-from-top-4 duration-300">
+              <div className="space-y-2">
+                <label className="text-[10px] font-bold text-admin-text-muted uppercase tracking-widest flex items-center gap-2">
+                  <TagIcon className="h-3 w-3" /> Listing Purpose
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setPurpose("sale")}
+                    className={`py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
+                      purpose === "sale"
+                        ? "bg-admin-accent text-white border-admin-accent shadow-lg"
+                        : "bg-admin-bg text-admin-text-muted border-admin-muted/20 hover:bg-admin-bg/80"
+                    }`}
+                  >
+                    For Sale
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setPurpose("rent")}
+                    className={`py-3 px-4 rounded-xl text-xs font-bold uppercase tracking-wider transition-all border ${
+                      purpose === "rent"
+                        ? "bg-purple-600 text-white border-purple-600 shadow-lg"
+                        : "bg-admin-bg text-admin-text-muted border-admin-muted/20 hover:bg-admin-bg/80"
+                    }`}
+                  >
+                    For Rent
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* DYNAMIC SOLD INPUTS */}
           {status === "sold" && (
             <div className="space-y-4 pt-4 border-t border-admin-muted/10 animate-in fade-in slide-in-from-top-4 duration-300">
               <div className="space-y-2">

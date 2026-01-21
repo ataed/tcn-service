@@ -1,0 +1,205 @@
+{
+  "Navigation": {
+    "home": "Accueil",
+    "buy": "Acheter",
+    "rent": "Louer",
+    "offPlan": "Projets Neufs",
+    "sell": "Vendre",
+    "about": "Notre Histoire",
+    "contact": "Contact"
+  },
+  "Hero": {
+    "titleLine1": "Découvrez l'Exceptionnel",
+    "titleLine2": "L'Immobilier de Prestige au Maroc",
+    "allCities": "Toutes les Villes",
+    "propertyType": "Type de Propriété",
+    "subtitle": "Un portefeuille exclusif de villas, penthouses et investissements sur plan pour une clientèle exigeante.",
+    "searchPlaceholder": "Ville, Projet ou Référence...",
+    "searchButton": "Rechercher",
+    "filters": "Filtres",
+    "moreOptions": "Plus d'options",
+    "tabs": {
+      "buy": "Acheter",
+      "rent": "Louer"
+    },
+    "curatedPortfolio": "Portefeuille Exclusif",
+    "privateClient": "Conseil Client Privé"
+  },
+  "Featured": {
+    "title": "Collection",
+    "titleHighlight": "Privée",
+    "subtitle": "Nos opportunités les plus exclusives, sélectionnées pour l'investisseur averti.",
+    "viewAll": "Voir Tout",
+    "badges": {
+      "offPlan": "Sur Plan",
+      "new": "Nouveau"
+    }
+  },
+  "Services": {
+    "header": "Notre Expertise",
+    "title": "Solutions",
+    "titleHighlight": "Immobilières",
+    "subtitle": "Au-delà des transactions, nous offrons un spectre complet de services de conseil adaptés à l'investisseur moderne.",
+    "cards": {
+      "buySell": {
+        "title": "Achat & Vente",
+        "desc": "Accompagnement expert dans l'acquisition et la vente d'actifs résidentiels et commerciaux de premier plan."
+      },
+      "offPlan": {
+        "title": "Investissement Sur Plan",
+        "desc": "Accès exclusif à des projets de développement à haut rendement avant leur mise sur le marché."
+      },
+      "management": {
+        "title": "Gestion de Patrimoine",
+        "desc": "Gestion locative et conciergerie conçues pour maximiser vos rendements en toute sérénité."
+      }
+    },
+    "learnMore": "En Savoir Plus"
+  },
+  "Heritage": {
+    "tagline": "Notre Héritage",
+    "title": "Redéfinir",
+    "titleHighlight": "L'Art de Vivre",
+    "p1": "Nous ne vendons pas simplement des propriétés ; nous curons des styles de vie. TCN Real Estate est fondée sur la conviction qu'une maison est plus qu'un actif, c'est la fondation de votre héritage.",
+    "p2": "Des villas privées à Marrakech aux actifs stratégiques à Casablanca, notre approche garantit la croissance de votre portefeuille avec discrétion.",
+    "stats": {
+      "sold": "Biens Vendus",
+      "volume": "Volume d'Affaires"
+    },
+    "button": "Notre Histoire",
+    "quote": "L'excellence n'est pas un acte, mais une habitude. Nous ne visons rien de moins.",
+    "founder": "Mhamed Chrif — Fondateur"
+  },
+  "Footer": {
+    "brandDescription": "L'autorité en matière d'immobilier de luxe au Maroc. Nous faisons le pont entre les investisseurs internationaux et les opportunités locales exclusives.",
+    "colDiscover": "Découvrir",
+    "colContact": "Contact",
+    "colNewsletter": "Ventes Privées",
+    "newsletterText": "Rejoignez notre liste pour les opportunités hors marché.",
+    "emailPlaceholder": "Adresse Email",
+    "subscribe": "S'inscrire",
+    "copyright": "Tous droits réservés. Géré par Tangercybernegoce S.A.R.L.",
+    "privacy": "Politique de Confidentialité",
+    "terms": "Conditions Générales",
+    "developedBy": "Développé par"
+  },
+  "Search": {
+    "titleAll": "Propriétés",
+    "highlightAll": "de Prestige",
+    "titleSale": "Biens à la",
+    "highlightSale": "Vente",
+    "titleRent": "Biens à la",
+    "highlightRent": "Location",
+    "count": "{count} Propriétés trouvées",
+    "filters": "Filtres",
+    "clearFilters": "Réinitialiser",
+    "anyPurpose": "Tous les types",
+    "allCities": "Toutes les villes",
+    "allTypes": "Tous les biens",
+    "priceRange": "Gamme de prix (MAD)",
+    "minPrice": "Min",
+    "maxPrice": "Max",
+    "bedrooms": "Chambres",
+    "bathrooms": "Salles de bain",
+    "amenities": "Équipements",
+    "offPlanSubtitle": "Découvrez des opportunités d'investissement exclusives sur plan au Maroc.",
+    "noResultsTitle": "Aucun Résultat",
+    "noResultsDesc": "Nous n'avons trouvé aucun bien correspondant à vos filtres. Essayez de modifier votre budget ou la localisation.",
+    "buy": "Acheter",
+    "rent": "Louer"
+  },
+  "Property": {
+    "beds": "Chambres",
+    "baths": "SDB",
+    "sqft": "m²",
+    "month": "/ Mois",
+    "backToSearch": "Retour à la recherche",
+    "forRent": "À Louer",
+    "forSale": "À Vendre",
+    "guidePrice": "Prix Indicatif",
+    "about": "À propos de ce bien",
+    "features": "Caractéristiques",
+    "zoning": "Type de Zone",
+    "deliveryDate": "Date de Livraison",
+    "gallery": "Galerie",
+    "location": "Localisation",
+    "openMaps": "Ouvrir dans Google Maps",
+    "noCoords": "Localisation non disponible",
+    "documents": "Documents et Plans",
+    "document": "Document",
+    "download": "Télécharger PDF",
+    "interested": "Intéressé ?",
+    "contactText": "Contactez notre équipe privée pour organiser une visite.",
+    "contactButton": "Contacter l'Agent",
+    "offPlan": "Projets Neufs",
+    "reference": "Référence"
+  },
+  "Contact": {
+    "title": "Bureau Privé",
+    "subtitle": "Contactez-nous",
+    "description": "Que vous souhaitiez acquérir un bien d'exception ou céder un actif de votre portefeuille, notre équipe clientèle privée est à votre entière disposition.",
+    "form": {
+      "name": "Nom Complet",
+      "email": "Adresse Email",
+      "phone": "Numéro de Téléphone",
+      "subject": "Sujet",
+      "message": "Comment pouvons-nous vous aider ?",
+      "submit": "Demander une Consultation",
+      "sending": "Envoi en cours...",
+      "success": "Demande envoyée avec succès"
+    }
+  },
+  "info": {
+    "visit": "Visitez notre Siège",
+    "call": "Ligne Privée",
+    "email": "Écrivez-nous",
+    "address": "123 Boulevard d'Anfa, Casablanca, Maroc"
+  },
+  "Sell": {
+    "badge": "Bientôt Disponible",
+    "title": "Une Nouvelle Façon de",
+    "titleHighlight": "Vendre l'Exception",
+    "description": "Nous développons un portail numérique premium permettant aux propriétaires de lister et gérer leurs biens directement. En attendant, notre équipe d'experts est prête à prendre en charge votre bien personnellement.",
+    "cta": "Contacter nos Agents",
+    "backHome": "Retour à l'accueil",
+    "trustText": "La confiance des plus grands investisseurs au Maroc."
+  },
+  "Error": {
+    "pageNotFound": "Page Introuvable",
+    "notFoundDesc": "La propriété ou la page que vous recherchez a peut-être été déplacée ou n'existe plus.",
+    "backHome": "Retour à l'accueil",
+    "goBack": "Retour",
+    "somethingWentWrong": "Une erreur est survenue",
+    "errorDesc": "Nous nous excusons pour ce désagrément. Notre équipe a été notifiée. Veuillez rafraîchir la page.",
+    "tryAgain": "Réessayer"
+  },
+  "About": {
+    "badge": "Depuis 2012",
+    "heroTitle": "L'Excellence de l'Immobilier",
+    "heroHighlight": "au Maroc",
+    "heroDesc": "Plus qu'une agence immobilière, nous sommes les architectes de votre nouveau style de vie, reliant les investisseurs exigeants aux opportunités locales exclusives.",
+    "statYears": "Années d'Excellence",
+    "statProperties": "Biens Vendus",
+    "statClients": "Clients Satisfaits",
+    "statAwards": "Prix de l'Industrie",
+    "storyTitle": "Un Héritage de Confiance",
+    "storyP1": "Fondée avec la vision de redéfinir l'immobilier de luxe au Maroc, TCN Real Estate s'est imposée comme le partenaire privilégié des particuliers fortunés.",
+    "storyP2": "Notre approche est ancrée dans la discrétion, l'intelligence du marché et une profonde appréciation de la beauté architecturale.",
+    "founderRole": "Fondateur & PDG",
+    "quote": "Le luxe réside dans chaque détail.",
+    "valuesTitle": "Nos Valeurs",
+    "valuesDesc": "Les principes qui guident chacune de nos interactions.",
+    "value1Title": "Intégrité",
+    "value1Desc": "La transparence et l'honnêteté sont le fondement de toute relation.",
+    "value2Title": "Excellence",
+    "value2Desc": "Nous visons la perfection dans notre sélection et notre service client.",
+    "value3Title": "Portée Globale",
+    "value3Desc": "Connecter des chefs-d'œuvre locaux à une audience internationale.",
+    "value4Title": "Discrétion",
+    "value4Desc": "La confidentialité est notre priorité absolue pour notre clientèle exclusive.",
+    "ctaTitle": "Prêt à trouver votre bien ?",
+    "ctaBrowse": "Voir la Collection",
+    "ctaContact": "Contactez-nous",
+    "founderName": "Mhamed Chrif"
+  }
+}

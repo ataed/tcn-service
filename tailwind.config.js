@@ -9,6 +9,11 @@ module.exports = {
   ],
   theme: {
     extend: {
+      // 🟢 NEW: Connects to the fonts we loaded in layout.js
+      fontFamily: {
+        sans: ["var(--font-josefin)", "sans-serif"],
+        arabic: ["var(--font-almarai)", "sans-serif"],
+      },
       colors: {
         primary: {
           50: "#E1E8EF",
@@ -37,7 +42,7 @@ module.exports = {
           950: "#382814",
         },
         admin: {
-          // CSS variables for easy dark/light mode switching in the dashboard
+          // ✅ PRESERVED: Your Admin Theme Variables
           bg: "rgb(var(--admin-bg) / <alpha-value>)",
           surface: "rgb(var(--admin-surface) / <alpha-value>)",
           text: "rgb(var(--admin-text-primary) / <alpha-value>)",
@@ -45,10 +50,24 @@ module.exports = {
           accent: "#C69963",
         },
       },
-      // Breakpoints for real estate displays
       screens: {
         "2xl": "1536px",
-        "3xl": "1920px", // Perfect for showing wide property grids on 4K monitors
+        "3xl": "1920px",
+      },
+      // 🟢 NEW: Animations for the Hero Section
+      animation: {
+        "fade-in": "fadeIn 0.5s ease-out",
+        "subtle-zoom": "subtleZoom 20s infinite alternate linear",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        subtleZoom: {
+          "0%": { transform: "scale(1)" },
+          "100%": { transform: "scale(1.05)" },
+        },
       },
     },
   },
