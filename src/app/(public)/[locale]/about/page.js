@@ -111,7 +111,7 @@ export default async function AboutPage({ params }) {
             <div className="order-1 lg:order-2 relative h-[500px] md:h-[600px]">
               <div className="absolute inset-0 border border-white/10 rounded-2xl overflow-hidden">
                 <Image
-                  src="/agency-interior-2.png"
+                  src="/agency-interior-2.webp"
                   alt="TCN Office"
                   fill
                   className="object-cover"

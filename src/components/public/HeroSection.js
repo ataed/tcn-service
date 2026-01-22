@@ -39,7 +39,7 @@ export default function HeroSection({ locale }) {
       {/* 1. CINEMATIC BACKGROUND */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/hero-bg-luxury.jpg" // 🟢 Use string path for public folder
+          src="/hero-bg-luxury.webp" // 🟢 Use string path for public folder
           alt="Luxury Real Estate Morocco"
           fill
           // 🟢 CRITICAL FOR SPEED: Tells browser this is a full-width image

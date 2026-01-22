@@ -62,7 +62,7 @@ export default function AgencyValue({ locale }) {
           {/* 2. THE VISUAL (Optimized) */}
           <div className="relative h-[600px] w-full rounded-2xl overflow-hidden group">
             <Image
-              src="/agency-interior.png"
+              src="/agency-interior.webp"
               alt="Luxury Interior Design"
               fill
               // 🟢 FIX: Optimized for 50% width on desktop
