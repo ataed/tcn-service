@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import Image from "next/image"; // Keep for Lightbox (needs object-contain)
-import ImageWithLoader from "@/components/ui/ImageWithLoader"; // 🟢 Import the new loader
+import Image from "next/image"; // Keep for Lightbox
+import ImageWithLoader from "@/components/ui/ImageWithLoader"; // Optimized Loader
 import {
   XMarkIcon,
   ChevronLeftIcon,
@@ -69,19 +69,19 @@ export default function PropertyGallery({ images }) {
                   : "h-[200px] md:h-[240px]"
               }`}
             >
-              {/* 🟢 REPLACED: Use ImageWithLoader for the grid */}
-              {/* className="h-full w-full" ensures the wrapper fills the parent div */}
+              {/* 🟢 OPTIMIZED: Uses ImageWithLoader + Sharp */}
               <ImageWithLoader
                 src={img}
                 alt={`Property ${idx}`}
                 fill
                 className="h-full w-full"
+                // 🟢 Correct sizes for grid layout
                 sizes={
                   isFirst
                     ? "(max-width: 768px) 100vw, 50vw"
                     : "(max-width: 768px) 100vw, 25vw"
                 }
-                unoptimized
+                // ❌ Removed unoptimized (Allows Sharp to resize thumbnails)
               />
 
               {/* Overlay for the 4th image */}
@@ -137,16 +137,16 @@ export default function PropertyGallery({ images }) {
 
           {/* Main Image */}
           <div className="relative w-full h-full max-w-7xl max-h-[85vh] mx-4">
-            {/* 🟢 KEPT STANDARD IMAGE: We need object-contain here, not object-cover */}
+            {/* 🟢 KEPT STANDARD IMAGE (Object Contain) */}
             <Image
               src={images[currentIndex]}
               alt="Gallery Fullscreen"
               fill
               className="object-contain"
-              quality={100}
               priority
-              unoptimized
               sizes="100vw"
+              // ❌ Removed unoptimized (So it compresses even for full screen)
+              // ❌ Removed quality={100} (Default is better for speed)
             />
           </div>
 

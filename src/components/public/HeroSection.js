@@ -11,15 +11,12 @@ import {
   AdjustmentsHorizontalIcon,
 } from "@heroicons/react/24/outline";
 
-// Ensure this path matches your project structure
 import { PROPERTY_TYPES } from "@/lib/schema/definitions";
-import heroBg from "../../../public/hero-bg-luxury.jpg";
 
 export default function HeroSection({ locale }) {
   const t = useTranslations("Hero");
   const router = useRouter();
 
-  // Search State
   const [activeTab, setActiveTab] = useState("buy");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedType, setSelectedType] = useState("");
@@ -42,14 +39,14 @@ export default function HeroSection({ locale }) {
       {/* 1. CINEMATIC BACKGROUND */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={heroBg} //
+          src="/hero-bg-luxury.jpg" // 🟢 Use string path for public folder
           alt="Luxury Real Estate Morocco"
           fill
-          placeholder="blur" // 🟢 Activates the automatic luxury blur
+          // 🟢 CRITICAL FOR SPEED: Tells browser this is a full-width image
+          sizes="100vw"
+          priority={true} // 🟢 Loads immediately (LCP)
           className="object-cover object-center animate-subtle-zoom opacity-60"
-          priority
         />
-        {/* Dark Gradient Overlay for text readability */}
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/40 to-primary-950/60"></div>
       </div>
 
@@ -71,7 +68,7 @@ export default function HeroSection({ locale }) {
 
         {/* 3. THE OMNI-SEARCH ENGINE */}
         <div className="w-full max-w-6xl bg-primary-900/40 backdrop-blur-md border border-white/10 rounded-3xl p-6 shadow-2xl animate-fade-in-up delay-100">
-          {/* TABS (Buy / Rent) */}
+          {/* TABS */}
           <div className="flex justify-center sm:justify-start gap-4 mb-6">
             {["buy", "rent"].map((tab) => (
               <button
@@ -88,9 +85,9 @@ export default function HeroSection({ locale }) {
             ))}
           </div>
 
-          {/* INPUT GRID SYSTEM */}
+          {/* INPUTS */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4">
-            {/* 1. CITY SELECT */}
+            {/* CITY */}
             <div className="lg:col-span-4 relative group">
               <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none z-10">
                 <MapPinIcon className="h-5 w-5 text-primary-400 group-focus-within:text-accent-500 transition-colors" />
@@ -109,7 +106,7 @@ export default function HeroSection({ locale }) {
               </select>
             </div>
 
-            {/* 2. TYPE SELECT */}
+            {/* TYPE */}
             <div className="lg:col-span-3 relative group">
               <div className="absolute inset-y-0 left-5 flex items-center pointer-events-none z-10">
                 <HomeIcon className="h-5 w-5 text-primary-400 group-focus-within:text-accent-500 transition-colors" />
@@ -128,7 +125,7 @@ export default function HeroSection({ locale }) {
               </select>
             </div>
 
-            {/* 3. FILTERS BUTTON */}
+            {/* FILTERS */}
             <div className="lg:col-span-3">
               <button
                 onClick={handleSearch}
@@ -144,7 +141,7 @@ export default function HeroSection({ locale }) {
               </button>
             </div>
 
-            {/* 4. SEARCH ACTION */}
+            {/* SEARCH */}
             <div className="lg:col-span-2">
               <button
                 onClick={handleSearch}
@@ -158,7 +155,7 @@ export default function HeroSection({ locale }) {
           </div>
         </div>
 
-        {/* 🟢 NEW: EXCLUSIVE INDICATORS (No fake numbers) */}
+        {/* INDICATORS */}
         <div className="mt-12 hidden sm:flex items-center gap-8 text-white/50 text-[10px] md:text-xs font-medium tracking-[0.2em] uppercase animate-fade-in delay-200">
           <div className="flex items-center gap-3">
             <span className="relative flex h-2 w-2">

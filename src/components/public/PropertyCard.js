@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-// 🟢 REPLACED: Import the new loader instead of standard Image
 import ImageWithLoader from "@/components/ui/ImageWithLoader";
 import { MapPinIcon } from "@heroicons/react/24/outline";
 import { createClient } from "@/utils/supabase/client";
@@ -29,7 +28,6 @@ export default function PropertyCard({ property, locale, priority = false }) {
     return isRent ? `${formatted} ${t("month")}` : formatted;
   };
 
-  // Safely extract values
   const beds = property.bedrooms ?? property.attributes?.bedrooms ?? 0;
   const baths = property.bathrooms ?? property.attributes?.bathrooms ?? 0;
   const area = property.sqft ?? property.attributes?.area ?? 0;
@@ -49,19 +47,14 @@ export default function PropertyCard({ property, locale, priority = false }) {
         <div className="relative h-72 w-full overflow-hidden">
           {/* BADGES */}
           <div className="absolute top-4 left-4 z-20 flex flex-wrap gap-2">
-            {/* Property Type Badge */}
             <span className="px-3 py-1 bg-black/40 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest border border-white/10 rounded-full">
               {property.type}
             </span>
-
-            {/* Off-Plan Badge */}
             {property.is_off_plan && (
               <span className="px-3 py-1 bg-accent-600/90 backdrop-blur-md text-white text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg border border-accent-400/20">
                 {t("offPlan")}
               </span>
             )}
-
-            {/* Rent Badge */}
             {property.attributes?.purpose === "rent" && (
               <span className="px-3 py-1 bg-white text-primary-950 text-[10px] font-bold uppercase tracking-widest rounded-full shadow-lg">
                 {t("forRent") || "For Rent"}
@@ -69,16 +62,17 @@ export default function PropertyCard({ property, locale, priority = false }) {
             )}
           </div>
 
-          {/* 🟢 REPLACED: ImageWithLoader */}
+          {/* 🟢 OPTIMIZED IMAGE LOADER */}
           <ImageWithLoader
             src={getImageUrl(property.main_image_url)}
             alt={displayTitle}
             fill
-            // We apply the hover scale to the wrapper now.
-            // 'object-cover' is already handled inside ImageWithLoader.
-            className="h-full w-full transition-transform duration-1000 group-hover:scale-110"
-            unoptimized
+            // 🟢 CRITICAL: Correct sizing for grid layout
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+            // 🟢 CRITICAL: Removed unoptimized
             priority={priority}
+            // This applies to the WRAPPER div in ImageWithLoader
+            className="h-full w-full transition-transform duration-1000 group-hover:scale-110"
           />
 
           <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/20 to-transparent opacity-80 pointer-events-none" />
@@ -97,15 +91,11 @@ export default function PropertyCard({ property, locale, priority = false }) {
               <MapPinIcon className="h-4 w-4" />
               {displayCity}
             </div>
-
             <h3 className="text-xl font-light text-white leading-snug group-hover:text-accent-500 transition-colors line-clamp-2">
               {displayTitle}
             </h3>
           </div>
-
           <div className="w-full h-px bg-white/5"></div>
-
-          {/* SPECS */}
           <div className="flex items-center justify-start gap-8 text-sm text-white/60">
             {beds > 0 && (
               <div className="flex flex-col items-center gap-1">
@@ -117,7 +107,6 @@ export default function PropertyCard({ property, locale, priority = false }) {
                 </span>
               </div>
             )}
-
             {baths > 0 && (
               <div className="flex flex-col items-center gap-1">
                 <strong className="text-white text-lg font-serif">
@@ -128,7 +117,6 @@ export default function PropertyCard({ property, locale, priority = false }) {
                 </span>
               </div>
             )}
-
             {area > 0 && (
               <div className="flex flex-col items-center gap-1">
                 <strong className="text-white text-lg font-serif">
@@ -139,7 +127,6 @@ export default function PropertyCard({ property, locale, priority = false }) {
                 </span>
               </div>
             )}
-
             {beds === 0 && baths === 0 && area === 0 && (
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-accent-500/80">
                 {t("viewDetails") || "View Details"}

@@ -13,7 +13,7 @@ import StatsSection from "@/components/public/StatsSection";
 
 const signatureFontAr = Aref_Ruqaa({
   subsets: ["arabic"],
-  weight: "400", // Ruqaa is naturally bold/thick
+  weight: "400",
   display: "swap",
 });
 const signatureFont = Great_Vibes({
@@ -55,11 +55,12 @@ export default async function AboutPage({ params }) {
 
   return (
     <div className="bg-primary-950 min-h-screen text-white overflow-hidden">
-      {/* ... Hero Section ... */}
-      <section className="relative h-[70vh] flex items-center justify-center">
-        {/* ... keep hero content ... */}
+      {/* 1. HERO SECTION */}
+      {/* 🟢 FIXED: Updated padding and min-height for better spacing on mobile and large screens */}
+      <section className="relative min-h-[70vh] flex items-center justify-center pt-40 pb-20 lg:pt-52 lg:pb-32">
         <div className="relative z-10 text-center px-4 max-w-4xl mx-auto">
-          <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-accent-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-6 backdrop-blur-md">
+          {/* 🟢 FIXED: Increased margin below badge for more breathing room */}
+          <span className="inline-block py-1 px-3 rounded-full bg-white/5 border border-white/10 text-accent-500 text-[10px] font-bold uppercase tracking-[0.2em] mb-8 backdrop-blur-md">
             {t("badge")}
           </span>
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-serif font-light mb-8 leading-tight">
@@ -72,15 +73,16 @@ export default async function AboutPage({ params }) {
         </div>
       </section>
 
-      {/* ... Stats Section ... */}
+      {/* 2. STATS SECTION */}
       <StatsSection stats={stats} />
 
       {/* 3. OUR STORY */}
-      <section className="py-32 relative">
+      <section className="py-24 relative" dir={isArabic ? "rtl" : "ltr"}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Text Content */}
-            <div className="order-2 lg:order-1 space-y-8">
+            <div
+              className={`order-2 lg:order-1 space-y-8 ${isArabic ? "text-right" : "text-left"}`}
+            >
               <h2 className="text-3xl md:text-5xl font-serif leading-tight">
                 {t("storyTitle")}
               </h2>
@@ -89,18 +91,15 @@ export default async function AboutPage({ params }) {
                 <p>{t("storyP2")}</p>
               </div>
 
-              <div className="pt-10 mt-6 relative">
-                {/* Decorative Line */}
+              <div
+                className={`pt-10 mt-6 relative flex flex-col ${isArabic ? "items-start" : "items-start"}`}
+              >
                 <div className="w-16 h-[1px] bg-accent-500 mb-6"></div>
-
-                {/* The Signature Text */}
                 <div
                   className={`text-4xl md:text-5xl text-white/90 ${signatureClass} tracking-wide`}
                 >
                   {founderName}
                 </div>
-
-                {/* Role Label */}
                 <div className="mt-4">
                   <p className="text-accent-500 text-[10px] font-bold uppercase tracking-[0.2em]">
                     {t("founderRole")}
@@ -109,39 +108,25 @@ export default async function AboutPage({ params }) {
               </div>
             </div>
 
-            {/* Image Composition */}
-            <div className="order-1 lg:order-2 relative h-[600px]">
-              {/* 🟢 REPLACED: Icon -> Real Image */}
+            <div className="order-1 lg:order-2 relative h-[500px] md:h-[600px]">
               <div className="absolute inset-0 border border-white/10 rounded-2xl overflow-hidden">
                 <Image
                   src="/agency-interior-2.png"
-                  alt="TCN Office Interior"
+                  alt="TCN Office"
                   fill
                   className="object-cover"
                   sizes="(max-width: 768px) 100vw, 50vw"
+                  priority
                 />
-
-                {/* Optional: Dark Overlay so the badge pops */}
                 <div className="absolute inset-0 bg-primary-950/20"></div>
-              </div>
-
-              {/* Floating Badge (Keep this!) */}
-              <div className="absolute -bottom-10 -left-10 bg-primary-950 p-6 rounded-2xl border border-white/10 shadow-2xl max-w-xs hidden md:block z-10">
-                <p className="font-serif text-xl text-white mb-2">
-                  &quot;{t("quote")}&quot;
-                </p>
-                <div className="flex gap-1 text-accent-500">
-                  {[1, 2, 3, 4, 5].map((i) => (
-                    <span key={i}>★</span>
-                  ))}
-                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="py-32 bg-primary-900/30 border-t border-white/5">
+      {/* 4. VALUES SECTION */}
+      <section className="py-24 bg-primary-900/30 border-t border-white/5">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-20">
             <h2 className="text-3xl md:text-5xl font-serif mb-6">
@@ -171,12 +156,9 @@ export default async function AboutPage({ params }) {
         </div>
       </section>
 
-      {/* 5. CTA SECTION - Option 2: Framed Card */}
+      {/* 5. CTA SECTION */}
       <section className="py-20 px-4">
         <div className="max-w-7xl mx-auto bg-white/5 border border-white/10 rounded-3xl p-12 md:p-20 text-center relative overflow-hidden">
-          {/* Optional: Subtle Pattern/Texture overlay instead of blur */}
-          <div className="absolute inset-0 opacity-[0.03] bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
-
           <div className="relative z-10 max-w-3xl mx-auto">
             <h2 className="text-3xl md:text-5xl font-serif mb-8 text-white">
               {t("ctaTitle")}
@@ -184,7 +166,7 @@ export default async function AboutPage({ params }) {
             <div className="flex flex-col md:flex-row justify-center gap-4">
               <Link
                 href={`/${locale}/search`}
-                className="px-10 py-4 bg-accent-500 hover:bg-accent-600 text-white rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-xl shadow-accent-500/10"
+                className="px-10 py-4 bg-accent-500 hover:bg-accent-600 text-white rounded-full text-xs font-bold uppercase tracking-widest transition-all"
               >
                 {t("ctaBrowse")}
               </Link>

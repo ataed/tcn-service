@@ -86,9 +86,12 @@ export default async function PropertyDetailsPage({ params }) {
           src={getPublicUrl(property.main_image_url)}
           alt={title}
           fill
+          // 🟢 CRITICAL PERFORMANCE FIXES:
+          // 1. sizes="100vw" tells browser this is full width
+          // 2. Removed 'unoptimized' so sharp can compress it
+          sizes="100vw"
           className="object-cover"
           priority={true}
-          unoptimized
         />
         <div className="absolute inset-0 bg-gradient-to-t from-primary-950 via-primary-950/40 to-transparent"></div>
 

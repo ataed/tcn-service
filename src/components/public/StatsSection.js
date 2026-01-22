@@ -1,22 +1,23 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { useParams } from "next/navigation";
 
 export default function StatsSection({ stats }) {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
+  const { locale } = useParams();
+  const isArabic = locale === "ar";
 
-  // 1. Detect when section is in view
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          // Stop observing once triggered (runs only once)
           observer.disconnect();
         }
       },
-      { threshold: 0.3 }, // Trigger when 30% visible
+      { threshold: 0.2 }, // Trigger slightly earlier for better feel
     );
 
     if (sectionRef.current) {
@@ -29,25 +30,22 @@ export default function StatsSection({ stats }) {
   return (
     <section
       ref={sectionRef}
-      className="border-y border-white/5 bg-white/[0.02] backdrop-blur-sm"
+      className="max-w-7xl mx-auto px-4 py-12"
+      dir={isArabic ? "rtl" : "ltr"}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/5">
-          {stats.map((stat, idx) => (
-            <StatItem key={idx} stat={stat} isVisible={isVisible} />
-          ))}
-        </div>
+      {/* 🟢 FIXED GRID: 2 columns mobile, 4 columns desktop. Divide handles RTL perfectly */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 border border-white/10 rounded-3xl overflow-hidden bg-white/[0.02] divide-x divide-y divide-white/10 rtl:divide-x-reverse backdrop-blur-sm">
+        {stats.map((stat, idx) => (
+          <StatItem key={idx} stat={stat} isVisible={isVisible} index={idx} />
+        ))}
       </div>
     </section>
   );
 }
 
-// 🟢 Sub-component for individual counting logic
-function StatItem({ stat, isVisible }) {
+function StatItem({ stat, isVisible, index }) {
   const [count, setCount] = useState(0);
 
-  // Parse the number and suffix (e.g., "12+" -> num: 12, suffix: "+")
-  // or "2K+" -> num: 2, suffix: "K+"
   const rawValue = stat.value;
   const numValue = parseFloat(rawValue.replace(/[^0-9.]/g, ""));
   const suffix = rawValue.replace(/[0-9.]/g, "");
@@ -57,9 +55,8 @@ function StatItem({ stat, isVisible }) {
 
     let start = 0;
     const end = numValue;
-    // Luxury duration: slower is more elegant (2000ms)
     const duration = 2000;
-    const incrementTime = 30; // Update every 30ms
+    const incrementTime = 30;
     const totalSteps = duration / incrementTime;
     const increment = end / totalSteps;
 
@@ -77,15 +74,21 @@ function StatItem({ stat, isVisible }) {
   }, [isVisible, numValue]);
 
   return (
-    <div className="py-12 text-center group hover:bg-white/[0.02] transition-colors duration-500">
-      <div className="text-4xl md:text-5xl font-serif text-white mb-2 group-hover:text-accent-500 transition-colors flex justify-center items-center gap-0.5">
-        {/* The Number */}
+    <div
+      className={`
+      py-12 px-4 text-center group hover:bg-white/[0.03] transition-all duration-500 flex flex-col justify-center items-center
+      ${index < 2 ? "border-t-0" : ""} 
+      ${index % 2 === 0 ? "border-l-0" : ""}
+      lg:border-t-0
+    `}
+    >
+      <div className="text-4xl md:text-5xl lg:text-6xl font-serif text-white mb-3 group-hover:text-accent-500 transition-colors flex justify-center items-baseline gap-1">
         <span>{count % 1 !== 0 ? count.toFixed(1) : Math.floor(count)}</span>
-
-        {/* The Suffix (K, +, etc) */}
-        <span className="text-accent-500/80">{suffix}</span>
+        <span className="text-accent-500 font-sans text-2xl md:text-3xl">
+          {suffix}
+        </span>
       </div>
-      <div className="text-[10px] uppercase tracking-widest text-white/40">
+      <div className="text-[9px] md:text-[10px] uppercase tracking-[0.2em] text-white/40 font-medium leading-tight max-w-[120px] mx-auto">
         {stat.label}
       </div>
     </div>

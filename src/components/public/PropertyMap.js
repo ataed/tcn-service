@@ -3,9 +3,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import { useEffect } from "react";
 
-// 🟢 Fix Leaflet's default icon issue in Next.js
+// Fix Leaflet's default icon issue
 const icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png",
   iconRetinaUrl:
@@ -18,23 +17,33 @@ const icon = L.icon({
 });
 
 export default function PropertyMap({ lat, lng }) {
-  // Ensure map re-renders if coords change
   return (
     <div className="h-full w-full relative z-0">
       <MapContainer
         center={[lat, lng]}
-        zoom={15}
+        zoom={16} // 🟢 Slightly closer zoom for better house detail
         scrollWheelZoom={false}
-        className="h-full w-full grayscale hover:grayscale-0 transition-all duration-700"
+        className="h-full w-full transition-all duration-700"
         style={{ height: "100%", width: "100%", background: "#0a0a0a" }}
       >
-        {/* 🟢 Dark Matter Tiles (Luxury Look) */}
+        {/* 🟢 High-Quality Satellite Imagery (Esri World Imagery) */}
         <TileLayer
-          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+          attribution="&copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
           url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
         />
+
+        {/* 🟢 Optional: Road Labels Overlay (Helps users identify streets on top of satellite) */}
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_only_labels/{z}/{x}/{y}{r}.png"
+          attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        />
+
         <Marker position={[lat, lng]} icon={icon}>
-          <Popup className="text-black font-serif">Property Location</Popup>
+          <Popup className="font-sans">
+            <span className="font-bold text-primary-950">
+              Property Location
+            </span>
+          </Popup>
         </Marker>
       </MapContainer>
     </div>
