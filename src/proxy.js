@@ -6,37 +6,27 @@ import { routing } from "@/i18n/routing";
 const handleI18nRouting = createMiddleware(routing);
 
 export async function proxy(request) {
-  const { pathname } = request.nextUrl;
+  const { pathname, searchParams } = request.nextUrl;
 
-  // 1. Generate a secure random Nonce for this specific request
-  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
+  // 🛡️ 1. THE PRIORITY BYPASS
+  // This detects Next.js 16 system files, preloads, and optimized images.
+  // It returns a clean response immediately, fixing the "Provisional Headers" hang.
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.includes("/static/") ||
+    pathname.match(/\.(webp|png|jpg|jpeg|svg|gif|ico|woff2?)$/) ||
+    searchParams.has("url") // Specifically targets /_next/image optimization
+  ) {
+    return NextResponse.next();
+  }
 
-  // 2. Define the CSP (Added explicit 'self' and https: for public images)
-  const cspHeader = `
-  default-src 'self';
-  script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval';
-  style-src 'self' 'unsafe-inline';
-  img-src 'self' blob: data: https: http: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
-  font-src 'self' data: https: http:;
-  connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
-  frame-ancestors 'none';
-  base-uri 'self';
-  form-action 'self';
-  object-src 'none';
-`
-    .replace(/\s{2,}/g, " ")
-    .trim();
-
-  // 3. Set the Nonce in Request Headers so Next.js can find it
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
-  requestHeaders.set("Content-Security-Policy", cspHeader);
+  // 2. The CSP Header (Compact single-line string to avoid parsing errors)
+  const cspHeader =
+    "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline' https://tudfxgqctzldwicshnfu.supabase.co; style-src 'self' 'unsafe-inline' https://unpkg.com; img-src 'self' blob: data: https: http: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com; font-src 'self' data: https: http:; connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none';";
 
   // --- PART 1: ADMIN & LOGIN (Supabase Auth Logic) ---
   if (pathname.startsWith("/admin") || pathname.startsWith("/login")) {
-    let response = NextResponse.next({
-      request: { headers: requestHeaders }, // Pass the new headers here
-    });
+    let response = NextResponse.next();
 
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
@@ -50,9 +40,7 @@ export async function proxy(request) {
             cookiesToSet.forEach(({ name, value }) =>
               request.cookies.set(name, value),
             );
-            response = NextResponse.next({
-              request: { headers: requestHeaders },
-            });
+            response = NextResponse.next();
             cookiesToSet.forEach(({ name, value, options }) =>
               response.cookies.set(name, value, options),
             );
@@ -65,32 +53,30 @@ export async function proxy(request) {
       data: { user },
     } = await supabase.auth.getUser();
 
-    if (pathname.startsWith("/admin") && !user) {
+    // Protection logic
+    if (pathname.startsWith("/admin") && !user)
       return NextResponse.redirect(new URL("/login", request.url));
-    }
-
-    if (pathname.startsWith("/admin") && user) {
-      const userRole = user.user_metadata?.role;
-      if (userRole !== "admin")
-        return NextResponse.redirect(new URL("/", request.url));
-    }
-
-    if (pathname === "/login" && user) {
+    if (pathname.startsWith("/admin") && user?.user_metadata?.role !== "admin")
+      return NextResponse.redirect(new URL("/", request.url));
+    if (pathname === "/login" && user)
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
-    }
 
-    // Apply the CSP to the final response
+    // Apply CSP only to the actual HTML page
     response.headers.set("Content-Security-Policy", cspHeader);
     return response;
   }
 
-  // --- PART 2: EVERYTHING ELSE (i18n Routing) ---
+  // --- PART 2: i18n ROUTING (Everything else) ---
   const i18nResponse = handleI18nRouting(request);
+
+  // Apply CSP to localized pages
   i18nResponse.headers.set("Content-Security-Policy", cspHeader);
-  i18nResponse.headers.set("x-nonce", nonce);
   return i18nResponse;
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  // Broad matcher that handles all pages while excluding API and internal static paths
+  matcher: [
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
