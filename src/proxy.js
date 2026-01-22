@@ -11,12 +11,12 @@ export async function proxy(request) {
   // 1. Generate a secure random Nonce for this specific request
   const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
-  // 2. Define the CSP (Strict-Dynamic satisfies Mozilla, Nonce fixes the loading hang)
+  // 2. Define the CSP (Added explicit 'self' and https: for public images)
   const cspHeader = `
     default-src 'self';
     script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval';
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
+    img-src 'self' blob: data: https: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
     font-src 'self' data:;
     connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
     frame-ancestors 'none';
