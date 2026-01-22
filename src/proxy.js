@@ -8,19 +8,35 @@ const handleI18nRouting = createMiddleware(routing);
 export async function proxy(request) {
   const { pathname } = request.nextUrl;
 
-  // ============================================================
-  // 🛑 PART 1: ADMIN & LOGIN (The "Manual Exclude" from V1)
-  // ============================================================
-  // We strictly follow your V1 logic: If it's admin/login, SKIP i18n.
-  if (pathname.startsWith("/admin") || pathname.startsWith("/login")) {
-    // INSTEAD of just returning next(), we run the Security Check here.
+  // 1. Generate a secure random Nonce for this specific request
+  const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
 
-    // A. Setup Response
+  // 2. Define the CSP (Strict-Dynamic satisfies Mozilla, Nonce fixes the loading hang)
+  const cspHeader = `
+    default-src 'self';
+    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' blob: data: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
+    font-src 'self' data:;
+    connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
+    frame-ancestors 'none';
+    base-uri 'self';
+    form-action 'self';
+  `
+    .replace(/\s{2,}/g, " ")
+    .trim();
+
+  // 3. Set the Nonce in Request Headers so Next.js can find it
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set("x-nonce", nonce);
+  requestHeaders.set("Content-Security-Policy", cspHeader);
+
+  // --- PART 1: ADMIN & LOGIN (Supabase Auth Logic) ---
+  if (pathname.startsWith("/admin") || pathname.startsWith("/login")) {
     let response = NextResponse.next({
-      request: { headers: request.headers },
+      request: { headers: requestHeaders }, // Pass the new headers here
     });
 
-    // B. Setup Supabase
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL,
       process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_DEFAULT_KEY,
@@ -34,7 +50,7 @@ export async function proxy(request) {
               request.cookies.set(name, value),
             );
             response = NextResponse.next({
-              request: { headers: request.headers },
+              request: { headers: requestHeaders },
             });
             cookiesToSet.forEach(({ name, value, options }) =>
               response.cookies.set(name, value, options),
@@ -44,41 +60,36 @@ export async function proxy(request) {
       },
     );
 
-    // C. Get User
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
-    // D. Security Rules
-
-    // 1. Block access to /admin if not logged in
     if (pathname.startsWith("/admin") && !user) {
       return NextResponse.redirect(new URL("/login", request.url));
     }
 
-    // 2. Block access if role is not admin (Optional: Comment out if testing with normal user)
     if (pathname.startsWith("/admin") && user) {
       const userRole = user.user_metadata?.role;
-      if (userRole !== "admin") {
+      if (userRole !== "admin")
         return NextResponse.redirect(new URL("/", request.url));
-      }
     }
 
-    // 3. If on /login but already logged in -> Go to Dashboard
     if (pathname === "/login" && user) {
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
     }
 
+    // Apply the CSP to the final response
+    response.headers.set("Content-Security-Policy", cspHeader);
     return response;
   }
 
-  // ============================================================
-  // 🌍 PART 2: EVERYTHING ELSE (Run i18n)
-  // ============================================================
-  return handleI18nRouting(request);
+  // --- PART 2: EVERYTHING ELSE (i18n Routing) ---
+  const i18nResponse = handleI18nRouting(request);
+  i18nResponse.headers.set("Content-Security-Policy", cspHeader);
+  i18nResponse.headers.set("x-nonce", nonce);
+  return i18nResponse;
 }
 
 export const config = {
-  matcher: ["/((?!api|_next|.*\\..*).*)"],
-  // "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 };

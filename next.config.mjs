@@ -27,18 +27,8 @@ const nextConfig = {
             key: "Strict-Transport-Security",
             value: "max-age=31536000; includeSubDomains; preload",
           },
-          {
-            key: "Content-Security-Policy",
-            // 🟢 SECURITY WIN: Added 'strict-dynamic' which tells modern browsers
-            // to ignore the 'unsafe-inline' that the audit was complaining about.
-            value:
-              "default-src 'self'; " +
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' 'strict-dynamic' https://tudfxgqctzldwicshnfu.supabase.co; " +
-              "style-src 'self' 'unsafe-inline'; " +
-              "img-src 'self' blob: data: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com; " +
-              "font-src 'self' data:; " +
-              "connect-src 'self' https://tudfxgqctzldwicshnfu.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;",
-          },
+          // 🛑 CSP REMOVED FROM HERE
+          // It is now handled dynamically in proxy.js to prevent the loading hang.
         ],
       },
     ];
