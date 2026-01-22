@@ -86,7 +86,11 @@ export default function FeaturedListings({ locale }) {
               // and Desktop (lg) shows 3 per row.
               className="w-full md:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.35rem)] flex-grow-0"
             >
-              <PropertyCard property={property} locale={locale} />
+              <PropertyCard
+                property={property}
+                locale={locale}
+                priority={true}
+              />
             </div>
           ))}
         </div>
