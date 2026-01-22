@@ -13,16 +13,17 @@ export async function proxy(request) {
 
   // 2. Define the CSP (Added explicit 'self' and https: for public images)
   const cspHeader = `
-    default-src 'self';
-    script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval';
-    style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data: https: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
-    font-src 'self' data:;
-    connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
-    frame-ancestors 'none';
-    base-uri 'self';
-    form-action 'self';
-  `
+  default-src 'self';
+  script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' blob: data: https: http: https://*.supabase.co https://*.tile.openstreetmap.org https://unpkg.com https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
+  font-src 'self' data: https: http:;
+  connect-src 'self' https://*.supabase.co https://server.arcgisonline.com https://*.basemaps.cartocdn.com;
+  frame-ancestors 'none';
+  base-uri 'self';
+  form-action 'self';
+  object-src 'none';
+`
     .replace(/\s{2,}/g, " ")
     .trim();
 
