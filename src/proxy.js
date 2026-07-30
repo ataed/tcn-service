@@ -38,15 +38,15 @@ export async function proxy(request) {
           },
           setAll(cookiesToSet) {
             cookiesToSet.forEach(({ name, value }) =>
-              request.cookies.set(name, value),
+              request.cookies.set(name, value)
             );
             response = NextResponse.next();
             cookiesToSet.forEach(({ name, value, options }) =>
-              response.cookies.set(name, value, options),
+              response.cookies.set(name, value, options)
             );
           },
         },
-      },
+      }
     );
 
     const {
@@ -56,7 +56,7 @@ export async function proxy(request) {
     // Protection logic
     if (pathname.startsWith("/admin") && !user)
       return NextResponse.redirect(new URL("/login", request.url));
-    if (pathname.startsWith("/admin") && user?.user_metadata?.role !== "admin")
+    if (pathname.startsWith("/admin") && user?.app_metadata?.role !== "admin")
       return NextResponse.redirect(new URL("/", request.url));
     if (pathname === "/login" && user)
       return NextResponse.redirect(new URL("/admin/dashboard", request.url));
