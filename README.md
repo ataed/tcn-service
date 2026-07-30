@@ -1,10 +1,10 @@
 # TCN Real Estate Platform
 
-A full-stack real estate web application built for a Moroccan real estate client, featuring a multilingual public portal and a secure, role-gated admin control panel for managing listings, media, and inventory.
+A full-stack real estate web application with a multilingual public portal and a role-gated admin control panel for managing listings, media, and inventory.
 
 **Live demo:** https://tcn-service.vercel.app
 
-> This was built as a real client engagement (not a tutorial or template clone). The client relationship concluded before a long-term contract was signed, and the project is shared here as a portfolio piece demonstrating production-level full-stack execution. Admin panel credentials are available on request.
+> I built this with a business partner for a real estate venture we're working on together. This is the first version — we put it online to see how the whole flow works end to end, and it's still in progress. Admin panel credentials are available on request.
 
 ---
 
@@ -15,7 +15,7 @@ TCN Real Estate is a property listing and investment platform aimed at high-end 
 - **Public Portal** — a marketing and discovery site for browsing, searching, and filtering property listings across multiple languages.
 - **Admin Panel** — a private, authenticated dashboard for managing the entire property inventory: listings, media, technical documents, and publication status.
 
-The goal was to prototype something close to what a boutique real estate agency would actually need to run digital operations, not just a listings template.
+The goal was to build something close to what a boutique real estate agency would actually need to run digital operations, not just a listings template.
 
 ## Key Features
 
@@ -48,8 +48,22 @@ This is the part I'd point to first if you're technical.
 **Security model:**
 
 - Row Level Security (RLS) policies in Postgres as the actual authorization boundary
-- Role-based access via Supabase `user_metadata`, checked server-side before any admin route renders
+- Role-based access via Supabase `app_metadata`, checked server-side before any admin route renders. `app_metadata` is only writable with the service key — unlike `user_metadata`, which the account holder can modify from the client
 - A locked-down CSP rather than a permissive default, with each allowed source justified by a real dependency (map tiles, Supabase storage, etc.)
+
+## Security Fix — July 2026
+
+The first version read the admin role from `user_metadata`, in both the middleware and the RLS policies on `listings` and `profiles`.
+
+`user_metadata` is writable by the account holder — any authenticated user can call `updateUser({ data: { role: 'admin' } })` from the browser. So a registered user could have assigned themselves the admin role. And because the RLS policies read the same value, the database layer wouldn't have stopped them either: the middleware redirect and the policies were both keyed on a field the user controlled.
+
+Supabase's security advisor flagged it as critical. The fix:
+
+- Moved the role to `app_metadata`, which only the service key can write
+- Rewrote the `Admins can manage listings` and `Profiles are viewable by owner or staff` policies to read from `app_metadata`
+- Updated the middleware check to match
+
+Signups were disabled and the project had a single user, so this was never exploitable in practice — but the authorization boundary was in the wrong place, and the point of putting it in the database is that it holds when everything above it fails.
 
 ## Tech Stack
 
@@ -90,4 +104,6 @@ src/
 
 ## Access
 
-The public portal is live and fully browsable at the link above. The admin panel is restricted — reach out and I'll provide demo credentials.
+The public portal is live and fully browsable at the link above.
+
+The admin panel is at `/login` and is restricted. Get in touch and I'll send demo credentials — full read/write, so you can create, edit and delete listings and try the media vault. The listings behind it are seeded test data, not real inventory.
