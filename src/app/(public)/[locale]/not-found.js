@@ -1,4 +1,4 @@
-"use client"; // Client component for interaction
+"use client";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { HomeIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";

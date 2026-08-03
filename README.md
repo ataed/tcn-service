@@ -35,6 +35,24 @@ The goal was to build something close to what a boutique real estate agency woul
 - Status management (available / sold / off-plan / draft) and one-click "featured" toggles
 - Built on Supabase Row Level Security, so authorization is enforced at the database layer, not just in the UI
 
+![Admin dashboard — inventory overview and published market value](docs/screenshots/admin-dashboard.png)
+
+Property inventory with status filters, type filter, and featured toggles:
+
+![Property inventory table](docs/screenshots/admin-inventory.png)
+
+Listings are authored in all four languages from a single form — headline and description per locale, with the Arabic fields rendering RTL:
+
+![Multilingual listing editor](docs/screenshots/admin-edit-multilingual.png)
+
+Location is set either by pasting a Google Maps URL — coordinates are parsed out of it — or by pinning directly on the map:
+
+![Location editor with map pin](docs/screenshots/admin-location.png)
+
+Media vault — cover image, gallery, and PDF technical records per property:
+
+![Media vault](docs/screenshots/admin-media-vault.png)
+
 ## Architecture Highlights
 
 This is the part I'd point to first if you're technical.

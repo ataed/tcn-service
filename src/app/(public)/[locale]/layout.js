@@ -1,14 +1,14 @@
 import { notFound } from "next/navigation";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
-import { Josefin_Sans, Almarai } from "next/font/google"; // Almarai is excellent for Arabic
+import { Josefin_Sans, Almarai } from "next/font/google";
 
 import { routing } from "@/i18n/routing";
 
 import ClientHeaderWrapper from "@/components/public/ClientHeaderWrapper";
 import Header from "@/components/public/Header";
 import Footer from "@/components/public/Footer";
-import "@/app/globals.css"; // Ensure path is correct
+import "@/app/globals.css";
 
 // --- FONTS ---
 const josefin = Josefin_Sans({

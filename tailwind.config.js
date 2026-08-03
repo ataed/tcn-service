@@ -9,7 +9,6 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // 🟢 NEW: Connects to the fonts we loaded in layout.js
       fontFamily: {
         sans: ["var(--font-josefin)", "sans-serif"],
         arabic: ["var(--font-almarai)", "sans-serif"],
@@ -42,7 +41,6 @@ module.exports = {
           950: "#382814",
         },
         admin: {
-          // ✅ PRESERVED: Your Admin Theme Variables
           bg: "rgb(var(--admin-bg) / <alpha-value>)",
           surface: "rgb(var(--admin-surface) / <alpha-value>)",
           text: "rgb(var(--admin-text-primary) / <alpha-value>)",
@@ -54,7 +52,7 @@ module.exports = {
         "2xl": "1536px",
         "3xl": "1920px",
       },
-      // 🟢 NEW: Animations for the Hero Section
+      //  Animations for the Hero Section
       animation: {
         "fade-in": "fadeIn 0.5s ease-out",
         "subtle-zoom": "subtleZoom 20s infinite alternate linear",
